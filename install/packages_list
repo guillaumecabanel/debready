@@ -1,0 +1,12 @@
+curl
+gdm3
+gnome-control-center
+gnome-session
+gnome-settings-daemon
+gnome-shell
+gnome-shell-extension-prefs
+gnome-terminal
+nautilus
+network-manager-gnome
+plymouth-themes
+zsh

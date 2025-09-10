@@ -2,12 +2,6 @@
 
 set -e
 
-echo "Check if we're in a D-Bus session, if not, start one"
-if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-    eval $(dbus-launch --sh-syntax)
-    export DBUS_SESSION_BUS_ADDRESS
-fi
-
 echo "Enable automatic login"
 CURRENT_USER=$(whoami)
 sudo mkdir -p /etc/gdm3

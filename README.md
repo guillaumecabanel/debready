@@ -3,7 +3,7 @@
 - Install Debian with no DE
 
 ```bash
-# add user to sudoers
+# Add user to sudoers
 su root
 apt install sudo
 sudo usermod -aG sudo [username]
@@ -13,15 +13,25 @@ exit
 ## Main script
 
 ```bash
-# Install packages
-sudo apt install gnome-shell gnome-session gdm3 nautilus gnome-control-center gnome-settings-daemon gnome-shell-extension-prefs network-manager-gnome curl git zsh gnome-terminal plymouth-themes
-
-# Add boot splash
-sudo sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*$/GRUB_CMDLINE_LINUX_DEFAULT="quiet splash"/' /etc/default/grub
-sudo update-grub
-sudo sed -i 's/^Theme=.*$/Theme=spinner/' /usr/share/plymouth/plymouthd.defaults
-sudo update-initramfs -u -k all
+wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.sh | bash
 ```
+
+## Features
+- Boot splash
+- Automatic login
+
+Gnome settings:
+- Compose key => capslock
+- Power button behaviour => nothing
+- Show battery percentage => ON
+- Automatic screen blank => OFF
+- Automatic suspend on battery power => ON, 20 minutes
+- Automatic suspend when plugged in => OFF
+
+Shortcuts:
+- Super + Enter => terminal
+- Super + F => Files
+
 ## Troubleshoot
 ### Wifi issues
 ```
@@ -54,19 +64,8 @@ Caskaydia Mono Nerd Font
 - firefox (need script)
 - terminal alacritty
 
-### Settings
-- automatic login
-- compose key => capslock
-- power button behaviour => nothing
-- show battery percentage => ON
-- Automatic screen blank => OFF
-- Automatic suspend on battery power => ON, 20 minutes
-- Automatic suspend when plugged in => OFF
-
 ### Shortcuts
 - super + B => browser
-- super + Enter => terminal
-- super + F => Files
 
 ### Terminal
 ( see gnu stow ?)

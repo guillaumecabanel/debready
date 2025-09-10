@@ -2,28 +2,34 @@
 
 set -e
 
-# Enable automatic login for the current user
+echo "Check if we're in a D-Bus session, if not, start one"
+if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+    eval $(dbus-launch --sh-syntax)
+    export DBUS_SESSION_BUS_ADDRESS
+fi
+
+echo "Enable automatic login"
 CURRENT_USER=$(whoami)
 sudo mkdir -p /etc/gdm3
 echo "[daemon]
 AutomaticLogin=$CURRENT_USER
 AutomaticLoginEnable=true" | sudo tee /etc/gdm3/custom.conf > /dev/null
 
-# Compose key => capslock
-sudo dconf write "/org/gnome/desktop.input-sources/xkb-options" "['compose:caps']"
+echo "Compose key => capslock"
+dconf write "/org/gnome/desktop/input-sources/xkb-options" "['compose:caps']"
 
-# Power button behaviour => nothing
-sudo dconf write "/org/gnome/settings-daemon/plugins/power/power-button-action" "'nothing'"
+echo "Power button behaviour => nothing"
+dconf write "/org/gnome/settings-daemon/plugins/power/power-button-action" "'nothing'"
 
-# Show battery percentage => ON
-sudo dconf write "/org/gnome/desktop/interface/show-battery-percentage" "true"
+echo "Show battery percentage => ON"
+dconf write "/org/gnome/desktop/interface/show-battery-percentage" "true"
 
-# Automatic screen blank => OFF
-sudo dconf write "/org/gnome/desktop/session/idle-delay" "uint32 0"
+echo "Automatic screen blank => OFF"
+dconf write "/org/gnome/desktop/session/idle-delay" "uint32 0"
 
-# Automatic suspend on battery power => ON, 20 minutes
-sudo dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type" "'suspend'"
-sudo dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout" "1200"
+echo "Automatic suspend on battery power => ON, 20 minutes"
+dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type" "'suspend'"
+dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout" "1200"
 
-# Automatic suspend when plugged in => OFF
-sudo dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type" "'nothing'"
+echo "Automatic suspend when plugged in => OFF"
+dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type" "'nothing'"

@@ -3,7 +3,7 @@
 set -e
 
 # Install packages
-sudo apt-get install -y $(cat install/packages_list)
+sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list)
 
 echo "Check if we're in a D-Bus session, if not, start one"
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
@@ -11,11 +11,11 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     export DBUS_SESSION_BUS_ADDRESS
 fi
 
-echo "\nAdd boot splash"
+echo -e "\nAdd boot splash"
 ./install/plymouth.sh
 
-echo "\nGnome settings"
+echo -e "\nGnome settings"
 ./install/gnome_settings.sh
 
-echo "\nGnome shortcuts"
-dconf load /org/gnome/settings-daemon/plugins/media-keys/ < ./install/shortcuts.ini
+echo -e "\nGnome shortcuts"
+dconf load /org/gnome/settings-daemon/plugins/media-keys/ < ~/.local/share/debready/install/shortcuts.ini

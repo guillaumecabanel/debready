@@ -17,6 +17,7 @@ ascii_art=' _______           __                                        __
 '
 
 echo -e "$ascii_art"
+echo "Preparing your Debian…"
 
 sudo apt-get update > /dev/null
 sudo apt-get install -y git > /dev/null
@@ -27,3 +28,7 @@ git clone https://github.com/guillaumecabanel/debready.git ~/.local/share/debrea
 
 echo "Installation starting…"
 source ~/.local/share/debready/install.sh
+echo "Installation complete, your Debian is ready!"
+echo "Rebooting in now…"
+sleep 2
+sudo systemctl reboot

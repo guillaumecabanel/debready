@@ -20,7 +20,7 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 - Boot splash
 - Automatic login
 
-Gnome settings:
+**Gnome settings:**
 - Compose key => capslock
 - Power button behaviour => nothing
 - Show battery percentage => ON
@@ -28,9 +28,13 @@ Gnome settings:
 - Automatic suspend on battery power => ON, 20 minutes
 - Automatic suspend when plugged in => OFF
 
-Shortcuts:
+**Shortcuts:**
 - Super + Enter => terminal
 - Super + F => Files
+
+**Terminal:**
+- Alacritty
+- Oh My Zsh
 
 ## Troubleshoot
 ### Wifi issues
@@ -62,7 +66,6 @@ Caskaydia Mono Nerd Font
 ### Apps
 - localsend (need script)
 - firefox (need script)
-- terminal alacritty
 
 ### Shortcuts
 - super + B => browser

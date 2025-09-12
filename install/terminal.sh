@@ -7,5 +7,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 cd ~/.local/share/debready/dotfiles
 stow -v -t "$HOME" alacritty
+rm -f "$HOME/.zshrc"
 stow -v -t "$HOME" zsh
 cd -

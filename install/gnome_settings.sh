@@ -27,3 +27,6 @@ dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-tim
 
 echo "Automatic suspend when plugged in => OFF"
 dconf write "/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type" "'nothing'"
+
+echo "Settings Caskaydia Mono Nerd Font as font"
+dconf write "/org/gnome/desktop/interface/font-name" "'CaskaydiaMonoNerdFontMono-Regular 11'"

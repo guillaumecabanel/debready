@@ -10,6 +10,9 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     export DBUS_SESSION_BUS_ADDRESS
 fi
 
+echo "Caskaydia Mono Nerd Font"
+~/.local/share/debready/install/font.sh
+
 echo "Gnome settings"
 ~/.local/share/debready/install/gnome_settings.sh
 

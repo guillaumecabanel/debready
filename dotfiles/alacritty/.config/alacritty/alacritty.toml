@@ -1,2 +1,21 @@
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 10
+
+[window]
+padding.x = 14
+padding.y = 14
+decorations = "None"
+
+[keyboard]
+bindings = [
+{ key = "F11", action = "ToggleFullscreen" }
+]
+
 [terminal]
-shell = { program = "/bin/zsh", args = ["-l"] }
+shell = { program = "/bin/zsh" }
+
+[mouse]
+hide_when_typing = true

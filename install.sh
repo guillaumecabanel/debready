@@ -22,5 +22,13 @@ dconf load "/org/gnome/settings-daemon/plugins/media-keys/" < ~/.local/share/deb
 echo "Terminal"
 ~/.local/share/debready/install/terminal.sh
 
+echo "Theme switcher"
+cd ~/.local/share/debready/dotfiles
+stow -v -t "$HOME" theme-switcher
+cd -
+systemctl --user enable theme-switcher.service
+systemctl --user start theme-switcher.service
+
+
 echo "Add boot splash"
 ~/.local/share/debready/install/plymouth.sh

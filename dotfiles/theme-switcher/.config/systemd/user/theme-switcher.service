@@ -1,0 +1,10 @@
+[Unit]
+Description=Theme Switcher
+
+[Service]
+ExecStart=%h/.local/bin/theme-switcher.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=default.target

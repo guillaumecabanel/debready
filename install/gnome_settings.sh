@@ -4,9 +4,19 @@ set -e
 
 CURRENT_USER=$(whoami)
 sudo mkdir -p /etc/gdm3
-echo "[daemon]
+
+DAEMON_CONF="/etc/gdm3/daemon.conf"
+if [ -f "$DAEMON_CONF" ]; then
+    if grep -q "^\[daemon\]" "$DAEMON_CONF"; then
+        sudo sed -i "/^\[daemon\]/a AutomaticLogin=$CURRENT_USER\nAutomaticLoginEnable=true" "$DAEMON_CONF"
+    else
+        echo -e "\n[daemon]\nAutomaticLogin=$CURRENT_USER\nAutomaticLoginEnable=true" | sudo tee -a "$DAEMON_CONF" > /dev/null
+    fi
+else
+    echo "[daemon]
 AutomaticLogin=$CURRENT_USER
-AutomaticLoginEnable=true" | sudo tee /etc/gdm3/custom.conf > /dev/null
+AutomaticLoginEnable=true" | sudo tee "$DAEMON_CONF" > /dev/null
+fi
 
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
 gsettings set org.gnome.desktop.interface enable-animations true

@@ -4,6 +4,7 @@ set -e
 
 CURRENT_USER=$(whoami)
 sudo mkdir -p /etc/gdm3
+echo "[daemon]
 AutomaticLogin=$CURRENT_USER
 AutomaticLoginEnable=true" | sudo tee /etc/gdm3/custom.conf > /dev/null
 

@@ -36,6 +36,9 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 - Alacritty
 - Oh My Zsh
 
+**Fonts:**
+- Caskaydia Mono Nerd Font
+
 ## Troubleshoot
 ### Wifi issues
 ```
@@ -56,8 +59,7 @@ iface lo inet loopback
 ```
 ## TODO
 
-### Fonts
-Caskaydia Mono Nerd Font
+
 
 ### Gnome extensions
 - tactile

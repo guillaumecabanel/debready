@@ -14,9 +14,7 @@ apply_dark_theme() {
 gsettings monitor org.gnome.desktop.interface color-scheme |
 while read -r line; do
     if [[ "$line" == *"prefer-dark"* ]]; then
-        if [[ "$line" == *"true"* ]]; then
-            apply_dark_theme
-        fi
+        apply_dark_theme
     else
         apply_light_theme
     fi

@@ -10,7 +10,7 @@ AutomaticLoginEnable=true" | sudo tee /etc/gdm3/custom.conf > /dev/null
 
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
 gsettings set org.gnome.desktop.interface document-font-name "CaskaydiaMonoNerdFontMono-Regular 12"
-gsettings set org.gnome.desktop.interface enable-animation true
+gsettings set org.gnome.desktop.interface enable-animations true
 gsettings set org.gnome.desktop.interface enable-hot-corners false
 gsettings set org.gnome.desktop.interface font-name "CaskaydiaMonoNerdFontMono-Regular 12"
 gsettings set org.gnome.desktop.interface monospace-font-name "CaskaydiaMonoNerdFontMono-Regular 14"

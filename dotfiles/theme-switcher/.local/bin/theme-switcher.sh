@@ -16,8 +16,8 @@ while read -r line; do
     if [[ "$line" == *"prefer-dark"* ]]; then
         if [[ "$line" == *"true"* ]]; then
             apply_dark_theme
-        else
-            apply_light_theme
         fi
+    else
+        apply_light_theme
     fi
 done

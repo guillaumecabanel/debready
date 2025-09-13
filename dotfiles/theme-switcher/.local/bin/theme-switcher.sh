@@ -1,12 +1,12 @@
 #!/bin/bash
 
 apply_light_theme() {
-    /bin/cp -f ~/.config/alacritty/theme-light.toml ~/.config/alacritty/current-theme.toml
+    /bin/cp -f "$HOME/.config/alacritty/theme-light.toml" "$HOME/.config/alacritty/current-theme.toml"
     touch "$HOME/.config/alacritty/alacritty.toml"
 }
 
 apply_dark_theme() {
-    /bin/cp -f ~/.config/alacritty/theme-dark.toml ~/.config/alacritty/current-theme.toml
+    /bin/cp -f "$HOME/.config/alacritty/theme-dark.toml" "$HOME/.config/alacritty/current-theme.toml"
     touch "$HOME/.config/alacritty/alacritty.toml"
 }
 

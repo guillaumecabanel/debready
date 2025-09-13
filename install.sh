@@ -3,7 +3,7 @@
 set -e
 
 echo "Install packages"
-sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list) > /dev/null
+sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list)
 
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval $(dbus-launch --sh-syntax)

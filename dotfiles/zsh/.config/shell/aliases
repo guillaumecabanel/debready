@@ -5,6 +5,7 @@ alias lt='eza --tree --level=2 --long --icons --git'
 alias lta='lt -a'
 
 alias code='code .'
-alias update_cursor='curl -sSL https://links.kuartz.fr/install_cursor | bash'
-alias cop="bundle exec rubocop"
+alias cop='bundle exec rubocop'
+alias lg='lazygit'
 alias up='sudo apt update && sudo apt upgrade -y && update_cursor && sudo apt autoremove && sudo apt autoclean'
+alias update_cursor='curl -sSL https://links.kuartz.fr/install_cursor | bash'

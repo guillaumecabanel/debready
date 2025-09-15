@@ -7,4 +7,4 @@ source $ZSH/oh-my-zsh.sh
 source $HOME/.config/shell/aliases
 source $HOME/.config/shell/init
 
-export PATH="./bin:$HOME"
+export PATH="./bin:$PATH"

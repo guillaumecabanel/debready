@@ -11,6 +11,7 @@ gnome-terminal
 nautilus
 network-manager-gnome
 plymouth-themes
+starship
 stow
 zoxide
 zsh

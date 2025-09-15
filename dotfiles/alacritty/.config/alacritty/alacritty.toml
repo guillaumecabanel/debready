@@ -12,8 +12,8 @@ size = 14
 [window]
 dimensions = { columns = 180, lines = 54 }
 padding.x = 14
-padding.y = 14
-decorations = "None"
+padding.y = 10
+decorations = "Full"
 
 [keyboard]
 bindings = [

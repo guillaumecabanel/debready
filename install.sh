@@ -24,6 +24,12 @@ dconf load "/org/gnome/settings-daemon/plugins/media-keys/" < ~/.local/share/deb
 echo "Terminal"
 ~/.local/share/debready/install/terminal.sh
 
+echo "Firefox"
+~/.local/share/debready/install/firefox.sh
+
+echo "Cursor"
+~/.local/share/debready/install/cursor.sh
+
 echo "Theme switcher"
 cd ~/.local/share/debready/dotfiles
 stow -t "$HOME" theme-switcher

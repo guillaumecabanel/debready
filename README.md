@@ -15,45 +15,43 @@ sudo usermod -aG sudo [username]
 exit
 ```
 
-## Main script
+## Installation
 
 ```bash
 wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.sh | bash
 ```
 
 ## Features
-- Boot splash
-- Automatic login
-
-**Gnome settings:**
-- Compose key => capslock
-- Power button behaviour => nothing
-- Show battery percentage => ON
-- Automatic screen blank => OFF
-- Automatic suspend on battery power => ON, 20 minutes
-- Automatic suspend when plugged in => OFF
 
 **Shortcuts:**
 - Terminal: <kbd>Super</kbd> + <kbd>Enter</kbd>
 - Files: <kbd>Super</kbd> + <kbd>F</kbd>
 - Browse: <kbd>Super</kbd> + <kbd>B</kbd>
 
-**Terminal:**
+**Apps:**
 - Alacritty
-- Oh My Zsh
+- Firefox
+- Cursor
 
-**TUI:**
+**Shell tools:**
+- Oh My Zsh
 - eza (aliased as `ls`)
-- lazygit (aliased as `lg`)
 - zoxide (aliased as `z`)
 - system update (aliased as `up`)
 
-**Fonts:**
-- JetBrainsMono Nerd Font
+**TUI:**
+- lazygit (aliased as `lg`)
 
-**Apps:**
-- Firefox
-- Cursor
+**Misc:**
+- Boot splash
+- Automatic login
+- Set <kbd>Capslock</kbd> as Compose key
+- Set power button behaviour to nothing
+- Show battery percentage
+- Remove automatic screen blank
+- Automatic suspend on battery power afer 20 minutes
+- Remove automatic suspend when plugged in
+- JetBrainsMono Nerd Font
 
 ## Troubleshoot
 ### Wifi issues

@@ -4,11 +4,11 @@ set -e
 
 sudo apt install -y gnome-shell-extension-manager pipx
 pipx install gnome-extensions-cli --system-site-packages
+export PATH="$PATH:/home/guillaume/.local/bin"
 
 gext install tactile@lundal.io
 gext install clipboard-history@alexsaveau.dev
 
-export PATH="$PATH:/home/guillaume/.local/bin"
 
 sudo cp ~/.local/share/gnome-shell/extensions/tactile@lundal.io/schemas/org.gnome.shell.extensions.tactile.gschema.xml /usr/share/glib-2.0/schemas/
 sudo cp ~/.local/share/gnome-shell/extensions/clipboard-history@alexsaveau.dev/schemas/org.gnome.shell.extensions.clipboard-history.gschema.xml /usr/share/glib-2.0/schemas/

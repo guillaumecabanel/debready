@@ -1,6 +1,11 @@
 # Debian setup
 ## Prerequisite
-- Install Debian with no DE
+**Install Debian**
+- Full disk encryption
+- No DE
+
+
+If you set a root password:
 
 ```bash
 # Add user to sudoers
@@ -31,13 +36,24 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 **Shortcuts:**
 - Super + Enter => terminal
 - Super + F => Files
+- Super + B => Browser
 
 **Terminal:**
 - Alacritty
 - Oh My Zsh
 
+**TUI:**
+- eza (aliased as `ls`)
+- lazygit (aliased as `lg`)
+- zoxide (aliased as `z`)
+- system update (aliased as `up`)
+
 **Fonts:**
-- Caskaydia Mono Nerd Font
+- JetBrainsMono Nerd Font
+
+**Apps:**
+- Firefox
+- Cursor
 
 ## Troubleshoot
 ### Wifi issues
@@ -57,9 +73,8 @@ last line of `/etc/network/interfaces` should be
 ```
 iface lo inet loopback
 ```
+
 ## TODO
-
-
 
 ### Gnome extensions
 - tactile
@@ -67,18 +82,9 @@ iface lo inet loopback
 
 ### Apps
 - localsend (need script)
-- firefox (need script)
 
-### Shortcuts
-- super + B => browser
-
-### Terminal
-( see gnu stow ?)
-- ohmyzsh
-- [prompt](https://starship.rs/)
+### TUI
 - fzf
-- zoxide
-- eza
 - fd
 
 ### Dev setup
@@ -87,6 +93,4 @@ iface lo inet loopback
 - rails
 - docker (postgresql, redis)
 - lazydocker
-- lazygit
 - neovim
-- cursor

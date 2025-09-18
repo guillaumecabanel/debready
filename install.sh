@@ -2,6 +2,8 @@
 
 set -e
 
+mkdir -p ~/.local/bin
+
 echo "Install packages"
 sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list)
 
@@ -10,7 +12,7 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     export DBUS_SESSION_BUS_ADDRESS
 fi
 
-echo "Caskaydia Mono Nerd Font"
+echo "Font"
 ~/.local/share/debready/install/font.sh
 
 echo "Gnome settings"
@@ -24,7 +26,7 @@ echo "Terminal"
 
 echo "Theme switcher"
 cd ~/.local/share/debready/dotfiles
-stow -v -t "$HOME" theme-switcher
+stow -t "$HOME" theme-switcher
 cd -
 systemctl --user enable theme-switcher.service
 systemctl --user start theme-switcher.service

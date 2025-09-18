@@ -27,6 +27,8 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 - Terminal: <kbd>Super</kbd> + <kbd>Enter</kbd>
 - Files: <kbd>Super</kbd> + <kbd>F</kbd>
 - Browse: <kbd>Super</kbd> + <kbd>B</kbd>
+- Tile manager: <kbd>Super</kbd> + <kbd>T</kbd>
+- Clipboard history: <kbd>Alt.</kbd> + <kbd>V</kbd>
 
 **Apps:**
 - Alacritty

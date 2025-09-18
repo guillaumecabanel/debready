@@ -34,9 +34,9 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 - Automatic suspend when plugged in => OFF
 
 **Shortcuts:**
-- Super + Enter => terminal
-- Super + F => Files
-- Super + B => Browser
+- Terminal: <kbd>Super</kbd> + <kbd>Enter</kbd>
+- Files: <kbd>Super</kbd> + <kbd>F</kbd>
+- Browse: <kbd>Super</kbd> + <kbd>B</kbd>
 
 **Terminal:**
 - Alacritty

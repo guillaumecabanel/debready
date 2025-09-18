@@ -2,8 +2,8 @@
 
 set -e
 
-wget -qO- https://github.com/ryanoasis/nerd-fonts/releases/latest/download/CascadiaMono.zip > CascadiaMono.zip
+wget -qO- https://github.com/ryanoasis/nerd-fonts/releases/latest/download/JetBrainsMono.zip > JetBrainsMono.zip
 mkdir -p ~/.local/share/fonts
-unzip -qo CascadiaMono.zip -d ~/.local/share/fonts
-rm CascadiaMono.zip
+unzip -qo JetBrainsMono.zip -d ~/.local/share/fonts
+rm JetBrainsMono.zip
 fc-cache -f

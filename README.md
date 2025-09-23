@@ -44,6 +44,11 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 **TUI:**
 - lazygit (aliased as `lg`)
 
+**Dev:**
+- Mise
+- Ruby
+- Rails
+
 **Misc:**
 - Boot splash
 - Automatic login
@@ -88,9 +93,6 @@ iface lo inet loopback
 - fd
 
 ### Dev setup
-- mise
-- ruby
-- rails
 - docker (postgresql, redis)
 - lazydocker
 - neovim

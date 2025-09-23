@@ -17,6 +17,7 @@ libssl-dev
 libyaml-dev
 nautilus
 network-manager-gnome
+pipx
 plymouth-themes
 rustc
 starship

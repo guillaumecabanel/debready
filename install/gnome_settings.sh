@@ -18,11 +18,13 @@ AutomaticLogin=$CURRENT_USER
 AutomaticLoginEnable=true" | sudo tee "$DAEMON_CONF" > /dev/null
 fi
 
+pipx install gnome-extensions-cli --system-site-packages
+
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
 gsettings set org.gnome.desktop.interface enable-animations true
 gsettings set org.gnome.desktop.interface enable-hot-corners false
-gsettings set org.gnome.desktop.interface font-name "'CaskaydiaMono Nerd Font Mono 12'"
-gsettings set org.gnome.desktop.interface monospace-font-name "'CaskaydiaMono Nerd Font Mono 12'"
+gsettings set org.gnome.desktop.interface font-name "'JetBrainsMono Nerd Font Mono 12'"
+gsettings set org.gnome.desktop.interface monospace-font-name "'JetBrainsMono Nerd Font Mono 12'"
 gsettings set org.gnome.desktop.interface show-battery-percentage true
 gsettings set org.gnome.desktop.session idle-delay 0
 gsettings set org.gnome.settings-daemon.plugins.power power-button-action "nothing"

@@ -7,4 +7,4 @@ stow -t "$HOME" mise
 cd -
 
 mise install ruby@latest
-mise use --global
+mise use --global ruby@latest

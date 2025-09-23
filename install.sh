@@ -31,6 +31,12 @@ echo "Firefox"
 echo "Cursor"
 ~/.local/share/debready/install/cursor.sh
 
+echo "Mise"
+~/.local/share/debready/install/mise.sh
+
+echo "Rails"
+~/.local/share/debready/install/rails.sh
+
 echo "Theme switcher"
 cd ~/.local/share/debready/dotfiles
 stow -t "$HOME" theme-switcher

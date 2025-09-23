@@ -2,6 +2,9 @@
 
 set -e
 
-mise install ruby
+cd ~/.local/share/debready/dotfiles
+stow -t "$HOME" mise
+cd -
+
+mise install ruby@latest
 mise use --global
-mise x ruby -- gem install -N bundler rails mailcatcher

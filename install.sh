@@ -60,12 +60,14 @@ ConditionPathExists=%h/.config/debready/first-boot
 
 [Service]
 Type=oneshot
-ExecStart=%h/.local/share/debready/install/gnome_extensions.sh
+Environment=DISPLAY=:0
+Environment=XDG_RUNTIME_DIR=/run/user/%i
+ExecStart=/bin/bash -c 'sleep 10 && %h/.local/share/debready/install/gnome_extensions.sh'
 ExecStartPost=/usr/bin/rm -f %h/.config/debready/first-boot
 ExecStartPost=/usr/bin/systemctl --user disable --now debready-gnome-extensions.service
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target
 EOF
 
 systemctl --user daemon-reload

@@ -81,10 +81,6 @@ iface lo inet loopback
 
 ## TODO
 
-### Gnome extensions
-- tactile
-- clipboard history
-
 ### Apps
 - localsend (need script)
 

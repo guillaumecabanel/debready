@@ -3,7 +3,7 @@
 set -e
 
 mkdir -p ~/.local/bin
-mkdir -p ~/.config
+mkdir -p ~/.config/systemd/user
 
 echo "Install packages"
 sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list)

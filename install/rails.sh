@@ -3,4 +3,5 @@
 set -e
 
 mise install ruby
-gem install -N bundler rails mailcatcher
+mise use --global
+mise x ruby -- gem install -N bundler rails mailcatcher

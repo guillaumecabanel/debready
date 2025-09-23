@@ -1,4 +1,6 @@
 alacritty
+autoconf
+build-essential
 curl
 eza
 gdm3
@@ -9,10 +11,16 @@ gnome-shell
 gnome-shell-extension-prefs
 gnome-terminal
 lazygit
+libffi-dev
+libgmp-dev
+libssl-dev
+libyaml-dev
 nautilus
 network-manager-gnome
 plymouth-themes
+rustc
 starship
 stow
+zlib1g-dev
 zoxide
 zsh

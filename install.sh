@@ -47,3 +47,26 @@ systemctl --user start theme-switcher.service
 
 echo "Add boot splash"
 ~/.local/share/debready/install/plymouth.sh
+
+echo "Schedule GNOME extensions install on first graphical login"
+mkdir -p ~/.config/debready
+touch ~/.config/debready/first-boot
+cat > ~/.config/systemd/user/debready-gnome-extensions.service << 'EOF'
+[Unit]
+Description=Debready - Install GNOME Extensions on first login
+Wants=graphical-session.target
+After=graphical-session.target
+ConditionPathExists=%h/.config/debready/first-boot
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/debready/install/gnome_extensions.sh
+ExecStartPost=/usr/bin/rm -f %h/.config/debready/first-boot
+ExecStartPost=/usr/bin/systemctl --user disable --now debready-gnome-extensions.service
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable debready-gnome-extensions.service

@@ -2,32 +2,11 @@
 
 set -e
 
-run_with_braille_spinner() {
-echo -n "" > /dev/null
-    local message="$1"
-    shift
-    local frames=("⠋" "⠙" "⠹" "⠸" "⠼" "⠴" "⠦" "⠧" "⠇" "⠏")
-    "$@" > /dev/null &
-    local pid=$!
-    local i=0
-    tput civis 2>/dev/null || true
-    while kill -0 "$pid" 2>/dev/null; do
-        printf "\r%s %s" "${frames[$i]}" "$message"
-        i=$(( (i + 1) % ${#frames[@]} ))
-        sleep 0.1
-    done
-    wait "$pid"
-    local exit_code=$?
-    printf "\r\033[K"
-    tput cnorm 2>/dev/null || true
-    return $exit_code
-}
-
 mkdir -p ~/.local/bin
 mkdir -p ~/.config/systemd/user
 
-run_with_braille_spinner "Installing packages…" sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list)
-echo "Installing packages… done."
+echo "Installing packages… (this may take a while)"
+sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list) > /dev/null
 
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
     eval $(dbus-launch --sh-syntax)

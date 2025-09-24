@@ -18,10 +18,13 @@ ascii_art=' _______           __                                        __
 
 echo -e "$ascii_art"
 
-echo "Cloning Debready…"
+echo "Setup will need your password. Press Enter to continue…"
+read -r
+
 sudo apt-get update > /dev/null
 sudo apt-get install -y git > /dev/null
 
+echo "Cloning Debready…"
 rm -rf ~/.local/share/debready
 git clone https://github.com/guillaumecabanel/debready.git ~/.local/share/debready > /dev/null
 

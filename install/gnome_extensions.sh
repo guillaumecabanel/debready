@@ -3,9 +3,10 @@
 set -e
 
 echo "Welcome to your brand new Debian machine!"
-echo "Now that Desktop Environment is set up, we need to install some Gnome extensions…"
-echo "Ready?"
-sleep 2
+echo "Now that Desktop Environment is set up, we need to install some Gnome extensions."
+echo "Please, accept the extentions when prompted."
+echo "Press Enter to continue…"
+read -n 1 -s
 
 gext install tactile@lundal.io
 gext install clipboard-history@alexsaveau.dev
@@ -22,7 +23,6 @@ gsettings set org.gnome.shell.extensions.clipboard-history ignore-password-mimes
 gsettings set org.gnome.shell.extensions.clipboard-history display-mode 3 # no icon in tray
 gsettings set org.gnome.shell.extensions.clipboard-history toggle-menu "['<Alt>V']"
 
-# remove ~/.local/share/debready/install/gnome_extensions.sh from .config/shell/init
-sed -i '/source ~/.local\/share\/debready\/install\/gnome_extensions.sh/d' ~/.config/shell/init
+sed -i '$d' ~/.config/shell/init
 
 echo "Done!"

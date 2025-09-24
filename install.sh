@@ -66,27 +66,5 @@ systemctl --user enable theme-switcher.service
 systemctl --user start theme-switcher.service
 ~/.local/share/debready/install/plymouth.sh
 
-echo "Schedule GNOME extensions install on first graphical login"
-mkdir -p ~/.config/debready
-touch ~/.config/debready/first-boot
-cat > ~/.config/systemd/user/debready-gnome-extensions.service << 'EOF'
-[Unit]
-Description=Debready - Install GNOME Extensions on first login
-Wants=graphical-session.target
-After=graphical-session.target
-ConditionPathExists=%h/.config/debready/first-boot
-
-[Service]
-Type=oneshot
-Environment=DISPLAY=:0
-Environment=XDG_RUNTIME_DIR=/run/user/%i
-ExecStart=/bin/bash -c 'sleep 10 && %h/.local/share/debready/install/gnome_extensions.sh'
-ExecStartPost=/usr/bin/rm -f %h/.config/debready/first-boot
-ExecStartPost=/usr/bin/systemctl --user disable --now debready-gnome-extensions.service
-
-[Install]
-WantedBy=graphical-session.target
-EOF
-
-systemctl --user daemon-reload
-systemctl --user enable debready-gnome-extensions.service
+echo "Schedule GNOME extensions install on first terminal start"
+sed -i 's/shell = { program = "/bin/zsh" }/shell = { program = "~/.local/share/debready/install/gnome_extensions.sh" }/' ~/.config/alacritty/alacritty.toml

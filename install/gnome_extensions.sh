@@ -22,6 +22,7 @@ gsettings set org.gnome.shell.extensions.clipboard-history ignore-password-mimes
 gsettings set org.gnome.shell.extensions.clipboard-history display-mode 3 # no icon in tray
 gsettings set org.gnome.shell.extensions.clipboard-history toggle-menu "['<Alt>V']"
 
-sed -i 's|shell = { program = "~/.local/share/debready/install/gnome_extensions.sh" }|shell = { program = "/bin/zsh" }|' ~/.config/alacritty/alacritty.toml
+# remove ~/.local/share/debready/install/gnome_extensions.sh from .config/shell/init
+sed -i '/source ~/.local\/share\/debready\/install\/gnome_extensions.sh/d' ~/.config/shell/init
 
 echo "Done!"

@@ -67,4 +67,4 @@ systemctl --user start theme-switcher.service
 ~/.local/share/debready/install/plymouth.sh
 
 echo "Schedule GNOME extensions install on first terminal start"
-sed -i 's/shell = { program = "/bin/zsh" }/shell = { program = "~/.local/share/debready/install/gnome_extensions.sh" }/' ~/.config/alacritty/alacritty.toml
+sed -i 's|shell = { program = "/bin/zsh" }|shell = { program = "~/.local/share/debready/install/gnome_extensions.sh" }|' ~/.config/alacritty/alacritty.toml

@@ -2,7 +2,7 @@
 
 set -e
 
-cat ./ascii.txt
+wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/ascii.txt
 
 echo "Setup will need your password. Press Enter to continue…"
 read -r

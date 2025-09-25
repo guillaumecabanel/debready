@@ -45,5 +45,5 @@ systemctl --user enable theme-switcher.service
 systemctl --user start theme-switcher.service
 ~/.local/share/debready/install/plymouth.sh
 
-echo "Schedule GNOME extensions install on first terminal start"
-echo "source ~/.local/share/debready/install/gnome_extensions.sh" >> ~/.config/shell/init
+echo "Schedule post reboot script on first terminal start"
+echo "source ~/.local/share/debready/post_reboot.sh" >> ~/.config/shell/init

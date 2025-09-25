@@ -4,6 +4,7 @@ set -e
 
 mkdir -p ~/.local/bin
 mkdir -p ~/.config/systemd/user
+mkdir -p ~/.config/autostart
 
 echo "Installing packages… (this may take a while)"
 sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list) > /dev/null
@@ -46,4 +47,12 @@ systemctl --user start theme-switcher.service
 ~/.local/share/debready/install/plymouth.sh
 
 echo "Schedule post reboot script on first terminal start"
-echo "source ~/.local/share/debready/post_reboot.sh" >> ~/.config/shell/init
+cat > ~/.config/autostart/alacritty.desktop <<EOF
+[Desktop Entry]
+Type=Application
+Exec=alacritty -e ~/.local/share/debready/post_reboot.sh
+Hidden=false
+X-GNOME-Autostart-enabled=true
+Name=Post Reboot
+Comment=Run post reboot script
+EOF

@@ -12,6 +12,7 @@ read -r
 
 ~/.local/share/debready/install/gnome_extensions.sh
 
-sed -i '$d' ~/.config/shell/init
+# Clean up
+rm ~/.config/autostart/alacritty.desktop
 
 echo "Done!"

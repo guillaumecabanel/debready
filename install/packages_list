@@ -4,6 +4,7 @@ build-essential
 curl
 eza
 gdm3
+gh
 gnome-control-center
 gnome-session
 gnome-settings-daemon

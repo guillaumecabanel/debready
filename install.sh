@@ -6,12 +6,16 @@ mkdir -p ~/.local/bin
 mkdir -p ~/.config/systemd/user
 mkdir -p ~/.config/autostart
 
+sudo install -d -m 0755 /etc/apt/keyrings
+mkdir -p ~/.gnupg
+chmod 700 ~/.gnupg
+
 echo "Installing packages… (this may take a while)"
-sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list) > /dev/null
+sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list) >/dev/null
 
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
-    eval $(dbus-launch --sh-syntax)
-    export DBUS_SESSION_BUS_ADDRESS
+  eval $(dbus-launch --sh-syntax)
+  export DBUS_SESSION_BUS_ADDRESS
 fi
 
 echo "Installing beautiful font…"
@@ -21,7 +25,7 @@ echo "Setting up Gnome…"
 ~/.local/share/debready/install/gnome_settings.sh
 
 echo "Setting up shortcuts…"
-dconf load "/org/gnome/settings-daemon/plugins/media-keys/" < ~/.local/share/debready/install/shortcuts.ini
+dconf load "/org/gnome/settings-daemon/plugins/media-keys/" <~/.local/share/debready/install/shortcuts.ini
 
 echo "Setting up terminal…"
 ~/.local/share/debready/install/terminal.sh
@@ -47,7 +51,7 @@ systemctl --user start theme-switcher.service
 ~/.local/share/debready/install/plymouth.sh
 
 echo "Schedule post reboot script on first terminal start"
-cat > ~/.config/autostart/alacritty.desktop <<EOF
+cat >~/.config/autostart/alacritty.desktop <<EOF
 [Desktop Entry]
 Type=Application
 Exec=alacritty -e ~/.local/share/debready/post_reboot.sh

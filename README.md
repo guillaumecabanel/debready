@@ -52,6 +52,7 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 - Ruby
 - Rails
 - Docker
+- PostgreSQL running in Docker
 
 **Misc:**
 - Boot splash
@@ -93,6 +94,4 @@ iface lo inet loopback
 - fd
 
 ### Dev setup
-- docker (postgresql, redis)
-- lazydocker
 - neovim

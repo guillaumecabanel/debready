@@ -36,4 +36,6 @@ gsettings set org.gnome.settings-daemon.plugins.power power-button-action "nothi
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type "nothing"
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 1200
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type "suspend"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop']"
+gsettings set org.gnome.shell.app-switcher current-workspace-only true
 gsettings set org.gnome.shell.window-switcher current-workspace-only true

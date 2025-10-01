@@ -16,3 +16,6 @@ read -r
 rm ~/.config/autostart/alacritty.desktop
 
 echo "Done!"
+echo "Enjoy your new Debian!"
+echo "Press Enter to close this window."
+read -r

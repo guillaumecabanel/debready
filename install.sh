@@ -11,14 +11,27 @@ mkdir -p ~/.gnupg
 chmod 700 ~/.gnupg
 
 echo "Installing packages… (this may take a while)"
-sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list) >/dev/null
+
+# Count total packages for progress tracking
+TOTAL_PACKAGES=$(wc -l < ~/.local/share/debready/install/packages_list)
+echo "Installing $TOTAL_PACKAGES packages..."
+
+# Install packages with progress display
+PACKAGES=($(cat ~/.local/share/debready/install/packages_list))
+for i in "${!PACKAGES[@]}"; do
+    PACKAGE="${PACKAGES[$i]}"
+    PROGRESS=$(( (i + 1) * 100 / TOTAL_PACKAGES ))
+    echo -ne "\rInstalling packages: [$PROGRESS%] ($((i + 1))/$TOTAL_PACKAGES) - $PACKAGE"
+    sudo apt-get install -y "$PACKAGE" >/dev/null 2>&1
+done
+echo ""
 
 if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
   eval $(dbus-launch --sh-syntax)
   export DBUS_SESSION_BUS_ADDRESS
 fi
 
-echo "Installing beautiful font…"
+echo "Installing Nerd Font…"
 ~/.local/share/debready/install/font.sh
 
 echo "Setting up Gnome…"
@@ -60,7 +73,7 @@ echo "Schedule post reboot script on first terminal start"
 cat >~/.config/autostart/alacritty.desktop <<EOF
 [Desktop Entry]
 Type=Application
-Exec=/usr/bin/alacritty -e %u/.local/share/debready/post_reboot.sh
+Exec=/usr/bin/alacritty -e $HOME/.local/share/debready/post_reboot.sh
 Hidden=false
 X-GNOME-Autostart-enabled=true
 Name=Post Reboot

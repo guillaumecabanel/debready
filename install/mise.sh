@@ -12,5 +12,5 @@ Components: main
 Signed-By: /etc/apt/keyrings/mise-archive-keyring.gpg" | sudo tee /etc/apt/sources.list.d/mise.sources > /dev/null
 
 
-sudo apt-get update
-sudo apt-get -q install -y mise
+sudo apt-get update > /dev/null
+sudo apt-get install -y mise > /dev/null

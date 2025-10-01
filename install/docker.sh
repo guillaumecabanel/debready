@@ -12,8 +12,8 @@ Suites: trixie
 Components: stable
 Signed-By: /etc/apt/keyrings/docker.asc" | sudo tee /etc/apt/sources.list.d/docker.sources >/dev/null
 
-sudo apt-get update
-sudo apt-get -q install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+sudo apt-get update > /dev/null
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin > /dev/null
 
 sudo usermod -aG docker ${USER}
 

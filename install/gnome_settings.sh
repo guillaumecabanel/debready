@@ -18,7 +18,7 @@ AutomaticLogin=$CURRENT_USER
 AutomaticLoginEnable=true" | sudo tee "$DAEMON_CONF" > /dev/null
 fi
 
-pipx install gnome-extensions-cli --system-site-packages
+pipx -q install gnome-extensions-cli --system-site-packages
 
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
 gsettings set org.gnome.desktop.interface enable-animations true
@@ -36,7 +36,4 @@ gsettings set org.gnome.settings-daemon.plugins.power power-button-action "nothi
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type "nothing"
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 1200
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type "suspend"
-gsettings set org.gnome.shell.extensions.window-list display-all-workspaces false
-gsettings set org.gnome.shell.extensions.window-list grouping-mode "never"
-gsettings set org.gnome.shell.extensions.window-list show-on-all-monitors false
 gsettings set org.gnome.shell.window-switcher current-workspace-only true

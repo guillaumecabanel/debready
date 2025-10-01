@@ -20,7 +20,7 @@ for i in "${!PACKAGES[@]}"; do
     PACKAGE="${PACKAGES[$i]}"
     PROGRESS=$(( (i + 1) * 100 / TOTAL_PACKAGES ))
     echo -ne "\rInstalling packages: [$PROGRESS%] ($((i + 1))/$TOTAL_PACKAGES)"
-    sudo apt-get install -y "$PACKAGE" >/dev/null 2>&1
+    sudo apt-get -q install -y "$PACKAGE" >/dev/null 2>&1
 done
 echo ""
 

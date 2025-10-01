@@ -13,4 +13,4 @@ Signed-By: /etc/apt/keyrings/mise-archive-keyring.gpg" | sudo tee /etc/apt/sourc
 
 
 sudo apt-get update
-sudo apt-get install -y mise
+sudo apt-get install -y mise > /dev/null

@@ -10,18 +10,16 @@ sudo install -d -m 0755 /etc/apt/keyrings
 mkdir -p ~/.gnupg
 chmod 700 ~/.gnupg
 
-echo "Installing packages… (this may take a while)"
-
 # Count total packages for progress tracking
 TOTAL_PACKAGES=$(wc -l < ~/.local/share/debready/install/packages_list)
-echo "Installing $TOTAL_PACKAGES packages..."
+echo "Installing $TOTAL_PACKAGES packages…"
 
 # Install packages with progress display
 PACKAGES=($(cat ~/.local/share/debready/install/packages_list))
 for i in "${!PACKAGES[@]}"; do
     PACKAGE="${PACKAGES[$i]}"
     PROGRESS=$(( (i + 1) * 100 / TOTAL_PACKAGES ))
-    echo -ne "\rInstalling packages: [$PROGRESS%] ($((i + 1))/$TOTAL_PACKAGES) - $PACKAGE"
+    echo -ne "\rInstalling packages: [$PROGRESS%] ($((i + 1))/$TOTAL_PACKAGES)"
     sudo apt-get install -y "$PACKAGE" >/dev/null 2>&1
 done
 echo ""

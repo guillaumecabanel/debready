@@ -18,4 +18,4 @@ Pin: origin packages.mozilla.org
 Pin-Priority: 1000" | sudo tee /etc/apt/preferences.d/mozilla >/dev/null
 
 sudo apt-get update
-sudo apt-get install -y firefox
+sudo apt-get install -y firefox > /dev/null

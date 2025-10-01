@@ -26,12 +26,15 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 **Shortcuts:**
 - Terminal: <kbd>Super</kbd> + <kbd>Enter</kbd>
 - Files: <kbd>Super</kbd> + <kbd>F</kbd>
-- Browse: <kbd>Super</kbd> + <kbd>B</kbd>
+- Downloads: <kbd>Super</kbd> + <kbd>D</kbd>
+- Browser (Chrome): <kbd>Super</kbd> + <kbd>B</kbd>
+- Alternative browser (Firefox): <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd>
 - Tile manager: <kbd>Super</kbd> + <kbd>T</kbd>
 - Clipboard history: <kbd>Alt.</kbd> + <kbd>V</kbd>
 
 **Apps:**
 - Alacritty
+- Chrome
 - Firefox
 - Cursor
 
@@ -48,6 +51,7 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 - Mise
 - Ruby
 - Rails
+- Docker
 
 **Misc:**
 - Boot splash

@@ -7,6 +7,7 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/ascii
 echo "Setup will need your password. Press Enter to continue…"
 read -r
 
+echo "Installing Git…"
 sudo apt-get update > /dev/null
 sudo apt-get install -y git > /dev/null
 

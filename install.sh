@@ -30,6 +30,9 @@ dconf load "/org/gnome/settings-daemon/plugins/media-keys/" <~/.local/share/debr
 echo "Setting up terminal…"
 ~/.local/share/debready/install/terminal.sh
 
+echo "Installing Chrome…"
+~/.local/share/debready/install/chrome.sh
+
 echo "Installing Firefox…"
 ~/.local/share/debready/install/firefox.sh
 
@@ -41,6 +44,9 @@ echo "Installing Mise…"
 
 echo "Installing Rails…"
 ~/.local/share/debready/install/rails.sh
+
+echo "Installing Docker…"
+~/.local/share/debready/install/docker.sh
 
 echo "Making things beautiful…"
 cd ~/.local/share/debready/dotfiles
@@ -54,7 +60,7 @@ echo "Schedule post reboot script on first terminal start"
 cat >~/.config/autostart/alacritty.desktop <<EOF
 [Desktop Entry]
 Type=Application
-Exec=alacritty -e ~/.local/share/debready/post_reboot.sh
+Exec=/usr/bin/alacritty -e %u/.local/share/debready/post_reboot.sh
 Hidden=false
 X-GNOME-Autostart-enabled=true
 Name=Post Reboot

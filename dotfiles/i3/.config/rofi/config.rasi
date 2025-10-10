@@ -1,0 +1,10 @@
+configuration {
+    show-icons: true;
+    icon-theme: "Papirus";
+}
+
+entry {
+  text: "";
+}
+
+@theme "/home/guillaume/.local/share/rofi/themes/squared-nord.rasi"

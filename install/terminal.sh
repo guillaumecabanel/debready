@@ -2,6 +2,7 @@
 
 set -e
 
+export RUNZSH="no"
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 cd ~/.local/share/debready/dotfiles

@@ -42,11 +42,11 @@ echo "Installing Firefox…"
 echo "Installing Mise…"
 ~/.local/share/debready/install/mise.sh
 
-echo "Installing Rails…"
-~/.local/share/debready/install/rails.sh
-
 echo "Installing Docker…"
 ~/.local/share/debready/install/docker.sh
+
+echo "Installing Rails…"
+~/.local/share/debready/install/rails.sh
 
 echo "Making things beautiful…"
 ~/.local/share/debready/install/plymouth.sh

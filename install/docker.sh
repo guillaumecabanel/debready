@@ -21,5 +21,6 @@ sudo usermod -aG docker ${USER}
 echo '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"5"}}' | sudo tee /etc/docker/daemon.json
 
 # Install lazydocker
+export PATH="$PATH:$HOME/.local/share/mise/shims/"
 mise use -g go
 go install github.com/jesseduffield/lazydocker@latest

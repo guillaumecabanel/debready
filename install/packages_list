@@ -1,10 +1,9 @@
 alacritty
-autoconf
-build-essential
 curl
 eza
 gh
 gpg
+i3
 lazygit
 libffi-dev
 libgmp-dev
@@ -22,6 +21,7 @@ starship
 stow
 ufw
 unzip
+xinits
 zlib1g-dev
 zoxide
 zsh

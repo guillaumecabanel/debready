@@ -10,19 +10,8 @@ sudo install -d -m 0755 /etc/apt/keyrings
 mkdir -p ~/.gnupg
 chmod 700 ~/.gnupg
 
-# Count total packages for progress tracking
-TOTAL_PACKAGES=$(wc -l < ~/.local/share/debready/install/packages_list)
-echo "Installing $TOTAL_PACKAGES packages…"
-
-# Install packages with progress display
-PACKAGES=($(cat ~/.local/share/debready/install/packages_list))
-for i in "${!PACKAGES[@]}"; do
-    PACKAGE="${PACKAGES[$i]}"
-    PROGRESS=$(( (i + 1) * 100 / TOTAL_PACKAGES ))
-    echo -ne "\rInstalling packages: [$PROGRESS%] ($((i + 1))/$TOTAL_PACKAGES)"
-    sudo apt-get install -y "$PACKAGE" >/dev/null 2>&1
-done
-echo ""
+sudo apt-get update
+sudo apt-get install -y $(cat ~/.local/share/debready/install/packages_list)
 
 echo "Protect agains evil internet…"
 ~/.local/share/debready/install/ufw.sh

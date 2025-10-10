@@ -21,7 +21,7 @@ starship
 stow
 ufw
 unzip
-xinits
+xinit
 zlib1g-dev
 zoxide
 zsh

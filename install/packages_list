@@ -1,4 +1,6 @@
 alacritty
+autoconf
+build-essential
 curl
 eza
 gh

@@ -21,6 +21,7 @@ rustc
 sqlite3
 starship
 stow
+ufw
 zlib1g-dev
 zoxide
 zsh

@@ -24,6 +24,9 @@ for i in "${!PACKAGES[@]}"; do
 done
 echo ""
 
+echo "Protect agains evil internet…"
+~/.local/share/debready/install/ufw.sh
+
 echo "Installing Nerd Font…"
 ~/.local/share/debready/install/font.sh
 
@@ -43,4 +46,3 @@ echo "Installing Docker…"
 ~/.local/share/debready/install/docker.sh
 
 ~/.local/share/debready/install/plymouth.sh
-

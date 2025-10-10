@@ -27,6 +27,9 @@ echo ""
 echo "Protect agains evil internet…"
 ~/.local/share/debready/install/ufw.sh
 
+echo "Setting up i3…"
+~/.local/share/debready/install/i3.sh
+
 echo "Installing Nerd Font…"
 ~/.local/share/debready/install/font.sh
 
@@ -45,4 +48,5 @@ echo "Installing Rails…"
 echo "Installing Docker…"
 ~/.local/share/debready/install/docker.sh
 
+echo "Making things beautiful…"
 ~/.local/share/debready/install/plymouth.sh

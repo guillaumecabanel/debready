@@ -5,7 +5,6 @@ curl
 eza
 gh
 gpg
-unzip
 lazygit
 libffi-dev
 libgmp-dev
@@ -22,6 +21,7 @@ sqlite3
 starship
 stow
 ufw
+unzip
 zlib1g-dev
 zoxide
 zsh

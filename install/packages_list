@@ -1,8 +1,11 @@
 alacritty
 autoconf
 build-essential
+btop
 curl
 eza
+feh
+flameshot
 gh
 gpg
 i3
@@ -17,6 +20,7 @@ nautilus
 pipx
 plymouth-themes
 postgresql-client
+rofi
 rustc
 sqlite3
 starship

@@ -56,6 +56,9 @@ bindsym $mod+Return exec --no-startup-id $term
 set $browser firefox
 bindsym $mod+b exec --no-startup-id $browser
 
+# screenshot with flameshot <kbd>Print</kbd>
+bindsym Print exec "sh -c -- 'flameshot gui'"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 

@@ -29,6 +29,9 @@ if [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
   export DBUS_SESSION_BUS_ADDRESS
 fi
 
+echo "Protect agains evil internet…"
+~/.local/share/debready/install/ufw.sh
+
 echo "Installing Nerd Font…"
 ~/.local/share/debready/install/font.sh
 

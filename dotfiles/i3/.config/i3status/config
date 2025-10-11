@@ -11,7 +11,26 @@ general {
         interval = 5
 }
 
+order += "memory"
+order += "wireless _first_"
+order += "battery all"
 order += "tztime local"
+
+memory {
+        format = "  %percentage_used"
+        threshold_degraded = "10%"
+        format_degraded = "  %percentage_used"
+}
+
+wireless _first_ {
+        format_up = " 󰖩 "
+        format_down = " 󰖪 "
+}
+
+battery all {
+        integer_battery_capacity = true
+        format = "%percentage"
+}
 
 tztime local {
         format = "%a %d %b  %H:%M  "

@@ -7,14 +7,17 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
+        output_format = "i3bar"
         colors = true
         interval = 5
+        color_good = "#FFFFFF"
 }
 
+order += "tztime local"
 order += "memory"
+order += "volume master"
 order += "wireless _first_"
 order += "battery all"
-order += "tztime local"
 
 memory {
         format = "  %percentage_used"
@@ -29,9 +32,19 @@ wireless _first_ {
 
 battery all {
         integer_battery_capacity = true
-        format = "%percentage"
+        format = "%status%percentage"
+        status_chr = "󱐋"
+        status_bat = "  "
 }
 
 tztime local {
-        format = "%a %d %b  %H:%M  "
+        format = "%a %d %b  %H:%M                                                          "
+}
+
+volume master {
+        format = "󰕾 %volume"
+        format_muted = "󰝟"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
 }

@@ -11,9 +11,9 @@ italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
 size = 8
 
 [window]
-padding.x = 14
-padding.y = 10
-decorations = "None"
+padding.x = 4
+padding.y = 4
+decorations = "Full"
 
 [selection]
 save_to_clipboard = true

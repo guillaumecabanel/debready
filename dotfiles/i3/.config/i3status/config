@@ -38,7 +38,7 @@ battery all {
 }
 
 tztime local {
-        format = "%a %d %b  %H:%M                                                          "
+        format = "%a %d %b  %H:%M                                                                        "
 }
 
 volume master {

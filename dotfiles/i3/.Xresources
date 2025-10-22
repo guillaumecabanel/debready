@@ -1,0 +1,8 @@
+! Scale factor
+! see https://github.com/i3/i3/discussions/6157
+*dpi: 144
+Xft.dpi: 144
+
+! Fix cursor
+Xcursor.theme: Adwaita
+Xcursor.size: 32

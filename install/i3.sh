@@ -4,6 +4,7 @@ set -e
 
 cd ~/.local/share/debready/dotfiles
 stow -t "$HOME" i3
+stow -t "/" root-i3
 
 mkdir -p "$HOME/Pictures"
 cd ~/.local/share/debready/dotfiles

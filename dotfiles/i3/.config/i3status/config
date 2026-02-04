@@ -13,10 +13,10 @@ general {
         color_good = "#FFFFFF"
 }
 
-order += "tztime local"
-order += "memory"
+# order += "memory"
 order += "volume master"
-order += "wireless _first_"
+# order += "wireless _first_"
+order += "tztime local"
 order += "battery all"
 
 memory {
@@ -32,13 +32,13 @@ wireless _first_ {
 
 battery all {
         integer_battery_capacity = true
-        format = "%status%percentage"
-        status_chr = "󱐋"
-        status_bat = "  "
+        format = "%status%percentage "
+        status_chr = "󱐋 "
+        status_bat = "󰁹 "
 }
 
 tztime local {
-        format = "%a %d %b  %H:%M                                                                        "
+        format = "  %a %d %b  %H:%M "
 }
 
 volume master {

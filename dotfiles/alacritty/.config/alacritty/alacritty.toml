@@ -24,7 +24,8 @@ style = { shape = "Block", blinking = "On" }
 [keyboard]
 bindings = [
   { key = "F11", action = "ToggleFullscreen" },
-   { key = "N", mods = "Control|Shift", action = "CreateNewWindow" }
+  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
+  { key = "Return", mods = "Shift", chars = "\u001b\r" }
 ]
 
 [terminal]

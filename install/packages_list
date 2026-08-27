@@ -19,6 +19,7 @@ jq
 lazygit
 libffi-dev
 libgmp-dev
+libnotify-bin
 libpq-dev
 libsqlite3-0
 libssl-dev
@@ -36,6 +37,7 @@ stow
 tmux
 ufw
 unzip
+wl-clipboard
 xdg-utils
 zlib1g-dev
 zoxide

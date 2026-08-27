@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# stamp [date|time|iso|<strftime>] — timestamp onto clipboard + primary selection
+set -euo pipefail
+
+case "${1:-date}" in
+  date) fmt='%Y%m%d' ;;
+  time) fmt='%Y%m%d-%H%M%S' ;;
+  iso)  fmt='%Y-%m-%d' ;;
+  *)    fmt="$1" ;;
+esac
+
+s=$(date +"$fmt")
+printf '%s' "$s" | wl-copy
+printf '%s' "$s" | wl-copy --primary
+command -v notify-send >/dev/null && notify-send -t 1200 -i edit-paste "$s" "copied"

@@ -35,6 +35,7 @@ stow_pkg alacritty
 [ -L "$HOME/.zshrc" ] || rm -f "$HOME/.zshrc"
 stow_pkg zsh
 stow_pkg tmux
+stow_pkg stamp
 
 # Seed both theme symlinks. alacritty.toml imports ~/.current-theme.toml and
 # tmux.conf sources ~/.current-tmux-theme.conf, but theme-switcher only reacts

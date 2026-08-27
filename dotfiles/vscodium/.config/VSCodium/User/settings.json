@@ -1,0 +1,18 @@
+{
+    "window.commandCenter": false,
+    "workbench.browser.showInTitleBar": false,
+    "workbench.layoutControl.enabled": false,
+    "editor.minimap.enabled": false,
+    "workbench.activityBar.location": "hidden",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+
+    "window.autoDetectColorScheme": true,
+    "workbench.preferredDarkColorTheme": "Dark Modern",
+    "workbench.preferredLightColorTheme": "Light Modern",
+
+    "editor.rulers": [
+        { "column": 80, "color": "#8080801f" },
+        { "column": 120, "color": "#f8717155" }
+    ]
+}

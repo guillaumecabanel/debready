@@ -25,3 +25,38 @@ Signed-By: /etc/apt/keyrings/vscodium.asc'
 
 apt_refresh
 apt_install codium
+
+CODIUM_USER="$HOME/.config/VSCodium/User"
+
+# Create the leaf directory before stowing. stow folds: with ~/.config/VSCodium
+# absent it would link the whole directory into the checkout, and VSCodium would
+# then write globalStorage/, History/ and workspaceStorage/ into the git repo.
+mkdir -p "$CODIUM_USER"
+
+# A settings.json VSCodium wrote itself is a real file, which stow refuses to
+# overwrite. Keep it once, then get out of the way. On a fresh machine codium has
+# never been launched at this point, so there is nothing here and this is a no-op.
+if [ -f "$CODIUM_USER/settings.json" ] && [ ! -L "$CODIUM_USER/settings.json" ]; then
+    if [ -e "$CODIUM_USER/settings.json.pre-debready" ]; then
+        rm -f "$CODIUM_USER/settings.json"
+    else
+        mv "$CODIUM_USER/settings.json" "$CODIUM_USER/settings.json.pre-debready"
+    fi
+fi
+
+stow_pkg vscodium
+
+# Extensions. Never under sudo — they land in ~/.vscode-oss.
+mapfile -t EXTENSIONS < <(grep -vE '^[[:space:]]*(#|$)' "$DEBREADY_ROOT/install/vscodium_extensions")
+# One listing for the whole loop rather than one per extension: each codium CLI
+# call spawns Electron and costs about a second. --list-extensions lowercases the
+# publisher, so compare against a lowercased needle.
+installed="$(codium --list-extensions | tr '[:upper:]' '[:lower:]')"
+
+for extension in "${EXTENSIONS[@]}"; do
+    if printf '%s\n' "$installed" | grep -Fx "$(printf '%s' "$extension" | tr '[:upper:]' '[:lower:]')" >/dev/null; then
+        skip "$extension already installed"
+        continue
+    fi
+    codium --install-extension "$extension" >/dev/null
+done

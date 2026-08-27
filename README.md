@@ -54,13 +54,13 @@ cd ~/.local/share/debready
 - Alacritty
 - Chrome
 - Firefox (the default browser)
-- VSCodium
+- VSCodium (settings and extensions provisioned)
 
 **Terminal:**
 - Zsh with Oh My Zsh
 - Starship prompt
 - tmux, started by Alacritty (prefix <kbd>Ctrl</kbd> + <kbd>Space</kbd>)
-- Alacritty and tmux follow the GNOME light/dark colour scheme automatically
+- Alacritty, tmux and VSCodium follow the GNOME light/dark colour scheme automatically
 
 **Shell tools:**
 - eza (aliased as `ls`)
@@ -76,6 +76,7 @@ cd ~/.local/share/debready
 - Mise
 - Ruby
 - Rails
+- Ruby LSP (VSCodium extension)
 - Docker
 - PostgreSQL running in Docker
 - Redis running in Docker

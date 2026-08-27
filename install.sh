@@ -35,6 +35,9 @@ echo "Protect agains evil internet…"
 echo "Installing Nerd Font…"
 ~/.local/share/debready/install/font.sh
 
+echo "Setting up locale…"
+~/.local/share/debready/install/locale.sh
+
 echo "Setting up Gnome…"
 ~/.local/share/debready/install/gnome_settings.sh
 

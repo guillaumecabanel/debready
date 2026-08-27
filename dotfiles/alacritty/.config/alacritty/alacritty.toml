@@ -26,10 +26,18 @@ style = { shape = "Block", blinking = "On" }
 bindings = [
   { key = "F11", action = "ToggleFullscreen" },
   { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
+  # CSI-u, so tmux can tell Shift+Enter / Alt+Shift+Enter apart from a plain Enter
+  # (pairs with `extended-keys-format csi-u` in ~/.config/tmux/tmux.conf).
+  { key = "Return", mods = "Shift", chars = "\u001B[13;2u" },
+  { key = "Return", mods = "Alt|Shift", chars = "\u001B[13;4u" },
 ]
 
+# Every window opens a fresh, independent tmux session (auto-named 1, 2, 3...),
+# pre-populated with the windows listed in ~/.config/tmux/windows.conf.
+# The zsh -c wrapper is a rescue hatch: if tmux ever fails to start, you land in
+# a normal interactive shell instead of a terminal that will not open.
 [terminal]
-shell = { program = "/bin/zsh" }
+shell = { program = "/bin/zsh", args = ["-c", "~/.config/tmux/session.sh || exec /bin/zsh"] }
 
 [mouse]
 hide_when_typing = true

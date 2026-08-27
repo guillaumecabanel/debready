@@ -1,14 +1,25 @@
 #!/bin/bash
 
+# Repoint ~/.current-tmux-theme.conf and restyle any live tmux clients.
+# Guarded so it is a no-op when no tmux server is running; `return 0` keeps the
+# caller's exit status clean.
+apply_tmux_theme() {
+  ln -sf "$HOME/.config/tmux/theme-$1.conf" "$HOME/.current-tmux-theme.conf"
+  tmux has-session 2>/dev/null && tmux source-file "$HOME/.current-tmux-theme.conf" 2>/dev/null
+  return 0
+}
+
 apply_light_theme() {
   ln -sf "$HOME/.config/alacritty/theme-light.toml" "$HOME/.current-theme.toml"
   touch ~/.config/alacritty/alacritty.toml
+  apply_tmux_theme light
   jq '."editor.rulers" = [{"column": 80,"color": "#e5e5e5"},{"column": 120,"color": "#f87171"}]' ~/.config/Cursor/User/settings.json > tmp.json && mv tmp.json ~/.config/Cursor/User/settings.json
 }
 
 apply_dark_theme() {
   ln -sf "$HOME/.config/alacritty/theme-dark.toml" "$HOME/.current-theme.toml"
   touch ~/.config/alacritty/alacritty.toml
+  apply_tmux_theme dark
   jq '."editor.rulers" = [{"column": 80,"color": "#171717"},{"column": 120,"color": "#7f1d1d"}]' ~/.config/Cursor/User/settings.json > tmp.json && mv tmp.json ~/.config/Cursor/User/settings.json
 }
 

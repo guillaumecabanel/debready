@@ -21,6 +21,7 @@ fi
 pipx -q install gnome-extensions-cli --system-site-packages
 
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
+gsettings set org.gnome.desktop.interface clock-format "'24h'"
 gsettings set org.gnome.desktop.interface enable-animations true
 gsettings set org.gnome.desktop.interface enable-hot-corners false
 gsettings set org.gnome.desktop.interface enable-hot-corners false

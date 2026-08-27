@@ -42,22 +42,31 @@ cd ~/.local/share/debready
 - Terminal: <kbd>Super</kbd> + <kbd>Enter</kbd>
 - Files: <kbd>Super</kbd> + <kbd>F</kbd>
 - Downloads: <kbd>Super</kbd> + <kbd>D</kbd>
-- Browser (Chrome): <kbd>Super</kbd> + <kbd>B</kbd>
-- Alternative browser (Firefox): <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd>
+- Default browser (Firefox): <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>Enter</kbd>
+- Firefox "Perso" profile: <kbd>Super</kbd> + <kbd>B</kbd>
+- Copy today's date (`yyyymmdd`) to the clipboard: <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>D</kbd>
+- Switch to workspace 1-5: <kbd>Super</kbd> + <kbd>1</kbd>…<kbd>5</kbd>
+- Move window to workspace 1-5: <kbd>Super</kbd> + <kbd>Shift</kbd> + <kbd>1</kbd>…<kbd>5</kbd>
 - Tile manager: <kbd>Super</kbd> + <kbd>T</kbd>
-- Clipboard history: <kbd>Alt.</kbd> + <kbd>V</kbd>
+- Clipboard history: <kbd>Alt</kbd> + <kbd>V</kbd>
 
 **Apps:**
 - Alacritty
 - Chrome
-- Firefox
+- Firefox (the default browser)
 - VSCodium
 
+**Terminal:**
+- Zsh with Oh My Zsh
+- Starship prompt
+- tmux, started by Alacritty (prefix <kbd>Ctrl</kbd> + <kbd>Space</kbd>)
+- Alacritty and tmux follow the GNOME light/dark colour scheme automatically
+
 **Shell tools:**
-- Oh My Zsh
 - eza (aliased as `ls`)
 - zoxide (aliased as `z`)
 - system update (aliased as `up`)
+- gh, jq, sqlite3, wl-clipboard
 
 **TUI:**
 - lazygit (aliased as `lg`)
@@ -76,9 +85,12 @@ cd ~/.local/share/debready
 - Set <kbd>Capslock</kbd> as Compose key
 - Set power button behaviour to nothing
 - Show battery percentage
+- 24h clock
+- 5 fixed workspaces
 - Remove automatic screen blank
 - Automatic suspend on battery power afer 20 minutes
 - Remove automatic suspend when plugged in
+- Disable hot corners
 - JetBrainsMono Nerd Font
 
 ## Troubleshoot

@@ -4,8 +4,12 @@ set -euo pipefail
 source "$(dirname -- "${BASH_SOURCE[0]}")/../lib/common.sh"
 
 # dconf load replaces the whole subtree, so this converges on a re-run.
-dconf load /org/gnome/settings-daemon/plugins/media-keys/ \
-    <"$DEBREADY_ROOT/install/shortcuts.ini"
+#
+# @HOME@ rather than a literal path in the .ini: dconf does no expansion of its
+# own, so a `$HOME` or `~` in there would reach gnome-settings-daemon verbatim
+# and the keybinding would silently do nothing on any other username.
+sed "s|@HOME@|$HOME|g" "$DEBREADY_ROOT/install/shortcuts.ini" \
+    | dconf load /org/gnome/settings-daemon/plugins/media-keys/
 
 # GNOME 40+ gives Super+1..9 to the dash (switch-to-application-N); take the whole
 # row back so the number row means "workspace" everywhere.

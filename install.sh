@@ -19,6 +19,7 @@ fi
 #   mise before terminal   the stowed zsh init activates mise; stowing it while
 #                          mise is missing leaves a broken shell if we abort
 #   docker before postgres the container needs a running daemon and the group
+#   docker before redis    same
 #   postgres before rails  a Rails app expects its database to be up
 #   plymouth late          update-initramfs is by far the slowest step, so let
 #                          everything that can fail cheaply fail first
@@ -36,6 +37,7 @@ STEPS=(
   "vscodium:Installing VSCodium"
   "docker:Installing Docker"
   "postgres:Starting PostgreSQL"
+  "redis:Starting Redis"
   "rails:Installing Rails"
   "theme_switcher:Making things beautiful"
   "plymouth:Setting up boot splash"

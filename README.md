@@ -78,6 +78,7 @@ cd ~/.local/share/debready
 - Rails
 - Docker
 - PostgreSQL running in Docker
+- Redis running in Docker
 
 **Misc:**
 - Boot splash

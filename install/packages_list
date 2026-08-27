@@ -30,6 +30,7 @@ network-manager-gnome
 pipx
 plymouth-themes
 postgresql-client
+redis-tools
 rustc
 sqlite3
 starship

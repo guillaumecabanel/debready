@@ -21,6 +21,21 @@ exit
 wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.sh | bash
 ```
 
+## Re-running
+
+Every step is idempotent, so the whole setup or any single step can be repeated
+safely on an already-provisioned machine.
+
+```bash
+cd ~/.local/share/debready
+./install.sh --list            # show the steps, in run order
+./install.sh                   # run all of them
+./install.sh docker postgres   # run only these
+```
+
+`boot.sh` is the fresh-machine entry point only: it resets the checkout to
+`origin/main`, discarding local changes. Re-run `install.sh` directly instead.
+
 ## Features
 
 **Shortcuts:**
@@ -46,6 +61,7 @@ wget -qO- https://raw.githubusercontent.com/guillaumecabanel/debready/main/boot.
 
 **TUI:**
 - lazygit (aliased as `lg`)
+- lazydocker (aliased as `ld`)
 
 **Dev:**
 - Mise

@@ -1,25 +1,57 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+source "$(dirname -- "${BASH_SOURCE[0]}")/../lib/common.sh"
 
-wget -q https://download.docker.com/linux/debian/gpg -O- | sudo tee /etc/apt/keyrings/docker.asc >/dev/null
-sudo chmod a+r /etc/apt/keyrings/docker.asc
+# shellcheck source=/dev/null
+. /etc/os-release
 
-echo "
-Types: deb
+apt_keyring docker https://download.docker.com/linux/debian/gpg
+apt_repo docker "Types: deb
 URIs: https://download.docker.com/linux/debian
-Suites: trixie
+Suites: $VERSION_CODENAME
 Components: stable
-Signed-By: /etc/apt/keyrings/docker.asc" | sudo tee /etc/apt/sources.list.d/docker.sources >/dev/null
+Signed-By: /etc/apt/keyrings/docker.asc"
 
-sudo apt-get update > /dev/null
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin > /dev/null
+# Limit log size to avoid running out of disk. Written *before* the packages so
+# a fresh install starts its daemon with the limit already in place — this used
+# to be written afterwards with no restart, so it never took effect at all.
+tmp="$(mktemp)"
+trap 'rm -f "$tmp"' EXIT
+printf '%s\n' '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"5"}}' >"$tmp"
+daemon_json_changed=no
+if install_file 0644 "$tmp" /etc/docker/daemon.json; then
+    daemon_json_changed=yes
+fi
 
-sudo usermod -aG docker ${USER}
+apt_refresh
+apt_install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
-# Limit log size to avoid running out of disk
-echo '{"log-driver":"json-file","log-opts":{"max-size":"10m","max-file":"5"}}' | sudo tee /etc/docker/daemon.json
+# On a re-run the daemon was already running with the previous config.
+if [ "$daemon_json_changed" = yes ] && systemctl is-active --quiet docker; then
+    sudo systemctl restart docker
+fi
+sudo systemctl enable --quiet --now docker
 
-# Install lazydocker
-mise use -g go
-go install github.com/jesseduffield/lazydocker@latest
+if ! in_group docker; then
+    sudo usermod -aG docker "$DEBREADY_USER"
+fi
+
+# usermod does not affect an already-running process, so nothing later in this
+# session could talk to the socket as us. sg starts a shell that re-reads
+# /etc/group, which both works around that and proves the group add took — a
+# `sudo docker` here would mask a failed usermod until the next login.
+for _ in $(seq 30); do
+    if sg docker -c 'docker info' >/dev/null 2>&1; then
+        break
+    fi
+    sleep 1
+done
+sg docker -c 'docker info' >/dev/null 2>&1 \
+    || die "docker daemon not reachable as $DEBREADY_USER"
+
+# lazydocker, from the mise registry (aqua:jesseduffield/lazydocker). This
+# replaces a `mise use -g go` + `go install` pair that could not work: step
+# scripts are plain bash with no mise activation, so `go` was never on PATH,
+# and ~/go/bin is not on PATH in .zshrc either.
+mise use --global lazydocker >/dev/null

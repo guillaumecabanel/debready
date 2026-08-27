@@ -1,6 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+source "$(dirname -- "${BASH_SOURCE[0]}")/../lib/common.sh"
 
 # Interface language stays English; regional formats are French:
 # 24h clock, dd/mm/yyyy, €, metric, A4, comma decimal separator.
@@ -12,7 +13,11 @@ if ! grep -q '^fr_FR.UTF-8 UTF-8' /etc/locale.gen; then
     sudo sed -i 's/^# *fr_FR.UTF-8 UTF-8/fr_FR.UTF-8 UTF-8/' /etc/locale.gen
     grep -q '^fr_FR.UTF-8 UTF-8' /etc/locale.gen || echo 'fr_FR.UTF-8 UTF-8' | sudo tee -a /etc/locale.gen >/dev/null
 fi
-sudo locale-gen
+# locale-gen rebuilds every enabled locale and takes a while, so only run it
+# when the locale we want is not actually built yet.
+if ! locale -a 2>/dev/null | grep -ix 'fr_FR.utf8' >/dev/null; then
+    sudo locale-gen >/dev/null
+fi
 
 # 2. The key GNOME Settings > Region & Language > Formats writes (dconf path is
 #    the legacy /system/locale/, not /org/gnome/...). gnome-session reads it at
@@ -43,7 +48,3 @@ sudo /usr/sbin/update-locale \
     LC_TELEPHONE=fr_FR.UTF-8 \
     LC_NAME=fr_FR.UTF-8 \
     LC_IDENTIFICATION=fr_FR.UTF-8
-
-echo
-echo "--- /etc/locale.conf ---"
-cat /etc/locale.conf

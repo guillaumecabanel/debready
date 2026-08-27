@@ -1,3 +1,7 @@
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
-eval "$(mise activate zsh)"
+# Guarded: an install that aborted before mise.sh would otherwise make every
+# new shell print an error.
+command -v starship >/dev/null && eval "$(starship init zsh)"
+command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
+
+# mise is activated by the oh-my-zsh `mise` plugin (see plugins= in .zshrc),
+# which also wires up its completions. Do not eval `mise activate` again here.

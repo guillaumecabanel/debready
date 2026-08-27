@@ -9,7 +9,7 @@ alias lg='lazygit'
 alias ld='lazydocker'
 
 alias cursor='launch_cursor .'
-alias update_cursor='curl -sSL https://links.kuartz.fr/install_cursor | bash'
+alias update_cursor='curl -fsSL https://links.kuartz.fr/install_cursor | bash'
 
 alias up='sudo apt update && sudo apt upgrade -y && update_cursor && sudo apt autoremove && sudo apt autoclean'
 

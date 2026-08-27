@@ -1,16 +1,18 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+source "$(dirname -- "${BASH_SOURCE[0]}")/../lib/common.sh"
 
-wget -qO - https://mise.jdx.dev/gpg-key.pub | gpg --dearmor | sudo tee /etc/apt/keyrings/mise-archive-keyring.gpg 1> /dev/null
+# Older versions of this script dearmored the key to mise-archive-keyring.gpg;
+# nothing references that path any more.
+sudo rm -f /etc/apt/keyrings/mise-archive-keyring.gpg
 
-echo "
-Types: deb
+apt_keyring mise https://mise.jdx.dev/gpg-key.pub
+apt_repo mise 'Types: deb
 URIs: https://mise.jdx.dev/deb
 Suites: stable
 Components: main
-Signed-By: /etc/apt/keyrings/mise-archive-keyring.gpg" | sudo tee /etc/apt/sources.list.d/mise.sources > /dev/null
+Signed-By: /etc/apt/keyrings/mise.asc'
 
-
-sudo apt-get update > /dev/null
-sudo apt-get install -y mise > /dev/null
+apt_refresh
+apt_install mise

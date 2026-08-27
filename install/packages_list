@@ -2,7 +2,9 @@ alacritty
 autoconf
 build-essential
 curl
+dconf-cli
 eza
+fontconfig
 fonts-noto-color-emoji
 fonts-symbola
 gdm3
@@ -12,6 +14,8 @@ gnome-session
 gnome-settings-daemon
 gnome-shell
 gnome-shell-extension-prefs
+gnupg
+jq
 lazygit
 libffi-dev
 libgmp-dev
@@ -31,6 +35,8 @@ starship
 stow
 tmux
 ufw
+unzip
+xdg-utils
 zlib1g-dev
 zoxide
 zsh

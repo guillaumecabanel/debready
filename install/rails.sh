@@ -1,8 +1,19 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+source "$(dirname -- "${BASH_SOURCE[0]}")/../lib/common.sh"
 
-mise use --global ruby@latest
-mise settings add idiomatic_version_file_enable_tools ruby
-mise x ruby -- gem install bundler rails --no-document
-docker run -d --restart unless-stopped -p "127.0.0.1:5432:5432" --name=postgres17 -e POSTGRES_HOST_AUTH_METHOD=trust postgres:17
+mise use --global ruby@latest >/dev/null
+
+# `settings add` appends to a list, so it is the one call here that does not
+# converge on its own.
+if ! mise settings get idiomatic_version_file_enable_tools 2>/dev/null | grep '"ruby"' >/dev/null; then
+    mise settings add idiomatic_version_file_enable_tools ruby
+fi
+
+if mise exec ruby -- gem list -i bundler >/dev/null 2>&1 \
+    && mise exec ruby -- gem list -i rails >/dev/null 2>&1; then
+    skip "bundler and rails already installed"
+else
+    mise exec ruby -- gem install bundler rails --no-document >/dev/null
+fi

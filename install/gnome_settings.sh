@@ -1,29 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+source "$(dirname -- "${BASH_SOURCE[0]}")/../lib/common.sh"
 
-CURRENT_USER=$(whoami)
-sudo mkdir -p /etc/gdm3
+DAEMON_CONF=/etc/gdm3/daemon.conf
 
-DAEMON_CONF="/etc/gdm3/daemon.conf"
-if [ -f "$DAEMON_CONF" ]; then
-    if grep -q "^\[daemon\]" "$DAEMON_CONF"; then
-        sudo sed -i "/^\[daemon\]/a AutomaticLogin=$CURRENT_USER\nAutomaticLoginEnable=true" "$DAEMON_CONF"
-    else
-        echo -e "\n[daemon]\nAutomaticLogin=$CURRENT_USER\nAutomaticLoginEnable=true" | sudo tee -a "$DAEMON_CONF" > /dev/null
-    fi
-else
-    echo "[daemon]
-AutomaticLogin=$CURRENT_USER
-AutomaticLoginEnable=true" | sudo tee "$DAEMON_CONF" > /dev/null
+sudo install -d -m 0755 /etc/gdm3
+if [ ! -f "$DAEMON_CONF" ]; then
+    printf '[daemon]\n' | sudo tee "$DAEMON_CONF" >/dev/null
+elif ! grep -q '^\[daemon\]' "$DAEMON_CONF"; then
+    printf '\n[daemon]\n' | sudo tee -a "$DAEMON_CONF" >/dev/null
 fi
 
+# Delete-then-insert, so re-running converges. Appending alone used to add a
+# duplicate pair of keys on every run. The ^[[:space:]]* anchor deliberately
+# spares the commented-out examples GDM ships.
+sudo sed -i -E '/^[[:space:]]*AutomaticLogin(Enable)?[[:space:]]*=/d' "$DAEMON_CONF"
+sudo sed -i "/^\[daemon\]/a AutomaticLoginEnable=true\nAutomaticLogin=$DEBREADY_USER" "$DAEMON_CONF"
+
+# gext, used after the reboot by gnome_extensions.sh. pipx exits 0 with a notice
+# when the package is already there, so this needs no guard.
 pipx -q install gnome-extensions-cli --system-site-packages
 
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
 gsettings set org.gnome.desktop.interface clock-format "'24h'"
 gsettings set org.gnome.desktop.interface enable-animations true
-gsettings set org.gnome.desktop.interface enable-hot-corners false
 gsettings set org.gnome.desktop.interface enable-hot-corners false
 gsettings set org.gnome.desktop.interface font-name "'JetBrainsMono Nerd Font Mono 12'"
 gsettings set org.gnome.desktop.interface monospace-font-name "'JetBrainsMono Nerd Font Mono 12'"

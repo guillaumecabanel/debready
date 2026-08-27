@@ -1,34 +1,55 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-# Repoint ~/.current-tmux-theme.conf and restyle any live tmux clients.
-# Guarded so it is a no-op when no tmux server is running; `return 0` keeps the
-# caller's exit status clean.
-apply_tmux_theme() {
-  ln -sf "$HOME/.config/tmux/theme-$1.conf" "$HOME/.current-tmux-theme.conf"
+# Follows the GNOME colour scheme and repoints the theme symlinks Alacritty,
+# tmux and Cursor read.
+#
+# No `set -e`: the monitor loop below must survive a bad iteration.
+set -uo pipefail
+
+CURSOR_SETTINGS="$HOME/.config/Cursor/User/settings.json"
+
+RULERS_DARK='[{"column":80,"color":"#171717"},{"column":120,"color":"#7f1d1d"}]'
+RULERS_LIGHT='[{"column":80,"color":"#e5e5e5"},{"column":120,"color":"#f87171"}]'
+
+# apply_theme <light|dark> <rulers-json>
+apply_theme() {
+  ln -sfn "$HOME/.config/alacritty/theme-$1.toml" "$HOME/.current-theme.toml"
+  # Alacritty reloads on a write to its own config, not to the imported file.
+  touch "$HOME/.config/alacritty/alacritty.toml"
+
+  ln -sfn "$HOME/.config/tmux/theme-$1.conf" "$HOME/.current-tmux-theme.conf"
+  # Guarded so it is a no-op when no tmux server is running.
   tmux has-session 2>/dev/null && tmux source-file "$HOME/.current-tmux-theme.conf" 2>/dev/null
+
+  # Cursor writes settings.json on its first launch, so on a fresh machine
+  # there is nothing to patch yet. jq into a sibling temp file rather than
+  # tmp.json in the cwd, which for a systemd user service is $HOME.
+  if [ -f "$CURSOR_SETTINGS" ] && command -v jq >/dev/null; then
+    local tmp
+    tmp="$(mktemp "$CURSOR_SETTINGS.XXXXXX")" || return 0
+    if jq "\"editor.rulers\" = $2" "$CURSOR_SETTINGS" >"$tmp"; then
+      mv "$tmp" "$CURSOR_SETTINGS"
+    else
+      rm -f "$tmp"
+    fi
+  fi
+
+  # Keep the caller's exit status clean.
   return 0
 }
 
-apply_light_theme() {
-  ln -sf "$HOME/.config/alacritty/theme-light.toml" "$HOME/.current-theme.toml"
-  touch ~/.config/alacritty/alacritty.toml
-  apply_tmux_theme light
-  jq '."editor.rulers" = [{"column": 80,"color": "#e5e5e5"},{"column": 120,"color": "#f87171"}]' ~/.config/Cursor/User/settings.json > tmp.json && mv tmp.json ~/.config/Cursor/User/settings.json
+apply_current_theme() {
+  case "$1" in
+    *prefer-dark*) apply_theme dark "$RULERS_DARK" ;;
+    *) apply_theme light "$RULERS_LIGHT" ;;
+  esac
 }
 
-apply_dark_theme() {
-  ln -sf "$HOME/.config/alacritty/theme-dark.toml" "$HOME/.current-theme.toml"
-  touch ~/.config/alacritty/alacritty.toml
-  apply_tmux_theme dark
-  jq '."editor.rulers" = [{"column": 80,"color": "#171717"},{"column": 120,"color": "#7f1d1d"}]' ~/.config/Cursor/User/settings.json > tmp.json && mv tmp.json ~/.config/Cursor/User/settings.json
-}
+# gsettings monitor only reports *changes*, so sync once at startup — otherwise
+# the symlinks stay missing until the user happens to toggle the theme.
+apply_current_theme "$(gsettings get org.gnome.desktop.interface color-scheme)"
 
-# Monitor GNOME theme changes
 gsettings monitor org.gnome.desktop.interface color-scheme |
   while read -r line; do
-    if [[ "$line" == *"prefer-dark"* ]]; then
-      apply_dark_theme
-    else
-      apply_light_theme
-    fi
+    apply_current_theme "$line"
   done

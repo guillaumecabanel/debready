@@ -1,14 +1,38 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
+source "$(dirname -- "${BASH_SOURCE[0]}")/../lib/common.sh"
 
-gext install tactile@lundal.io
-gext install clipboard-history@alexsaveau.dev
+EXTENSIONS_DIR="$HOME/.local/share/gnome-shell/extensions"
+SCHEMAS_DIR=/usr/share/glib-2.0/schemas
 
+# Absolute path: this runs from post_reboot.sh under `alacritty -e`, whose PATH
+# comes from the GNOME session, not from .zshrc. common.sh prepends
+# ~/.local/bin, but be explicit about where gext comes from.
+GEXT="$HOME/.local/bin/gext"
 
-sudo cp ~/.local/share/gnome-shell/extensions/tactile@lundal.io/schemas/org.gnome.shell.extensions.tactile.gschema.xml /usr/share/glib-2.0/schemas/
-sudo cp ~/.local/share/gnome-shell/extensions/clipboard-history@alexsaveau.dev/schemas/org.gnome.shell.extensions.clipboard-indicator.gschema.xml /usr/share/glib-2.0/schemas/
-sudo glib-compile-schemas /usr/share/glib-2.0/schemas/
+install_extension() { # <uuid> <schema-basename>
+    if [ -d "$EXTENSIONS_DIR/$1" ]; then
+        skip "$1 already installed"
+    else
+        "$GEXT" install "$1"
+    fi
+
+    # The extension ships its schema for its own prefs dialog; we need it
+    # system-wide so the gsettings calls below can find it.
+    if ! sudo cmp -s "$EXTENSIONS_DIR/$1/schemas/$2" "$SCHEMAS_DIR/$2"; then
+        sudo cp "$EXTENSIONS_DIR/$1/schemas/$2" "$SCHEMAS_DIR/"
+        SCHEMAS_CHANGED=yes
+    fi
+}
+
+SCHEMAS_CHANGED=no
+install_extension tactile@lundal.io org.gnome.shell.extensions.tactile.gschema.xml
+install_extension clipboard-history@alexsaveau.dev org.gnome.shell.extensions.clipboard-indicator.gschema.xml
+
+if [ "$SCHEMAS_CHANGED" = yes ]; then
+    sudo glib-compile-schemas "$SCHEMAS_DIR/"
+fi
 
 gsettings set org.gnome.shell.extensions.tactile col-0 1
 gsettings set org.gnome.shell.extensions.tactile col-1 3

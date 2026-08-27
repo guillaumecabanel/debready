@@ -1,19 +1,24 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-set -e
+set -euo pipefail
 
-cat ~/.local/share/debready/ascii.txt
+DEBREADY_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+export DEBREADY_ROOT
+source "$DEBREADY_ROOT/lib/common.sh"
+
+cat "$DEBREADY_ROOT/ascii.txt"
 
 echo "Welcome to your brand new Debian machine!"
 echo "Now that Desktop Environment is set up, we need to install some Gnome extensions."
-echo "Please, accept the extentions when prompted."
+echo "Please, accept the extensions when prompted."
 echo "Press Enter to continue…"
 read -r
 
-~/.local/share/debready/install/gnome_extensions.sh
+log "Installing Gnome extensions…"
+bash "$DEBREADY_ROOT/install/gnome_extensions.sh"
 
-# Clean up
-rm ~/.config/autostart/alacritty.desktop
+# Deregister ourselves. -f so a manual re-run is not fatal.
+rm -f "$HOME/.config/autostart/alacritty.desktop"
 
 echo "Done!"
 echo "Enjoy your new Debian!"

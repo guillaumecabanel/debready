@@ -51,7 +51,7 @@ cd ~/.local/share/debready
 - Alacritty
 - Chrome
 - Firefox
-- Cursor
+- VSCodium
 
 **Shell tools:**
 - Oh My Zsh

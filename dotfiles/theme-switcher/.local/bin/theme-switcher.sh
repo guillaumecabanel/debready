@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 # Follows the GNOME colour scheme and repoints the theme symlinks Alacritty,
-# tmux and Cursor read.
+# tmux and VSCodium read.
 #
 # No `set -e`: the monitor loop below must survive a bad iteration.
 set -uo pipefail
 
-CURSOR_SETTINGS="$HOME/.config/Cursor/User/settings.json"
+CODIUM_SETTINGS="$HOME/.config/VSCodium/User/settings.json"
 
 RULERS_DARK='[{"column":80,"color":"#171717"},{"column":120,"color":"#7f1d1d"}]'
 RULERS_LIGHT='[{"column":80,"color":"#e5e5e5"},{"column":120,"color":"#f87171"}]'
@@ -21,14 +21,14 @@ apply_theme() {
   # Guarded so it is a no-op when no tmux server is running.
   tmux has-session 2>/dev/null && tmux source-file "$HOME/.current-tmux-theme.conf" 2>/dev/null
 
-  # Cursor writes settings.json on its first launch, so on a fresh machine
+  # VSCodium writes settings.json on its first launch, so on a fresh machine
   # there is nothing to patch yet. jq into a sibling temp file rather than
   # tmp.json in the cwd, which for a systemd user service is $HOME.
-  if [ -f "$CURSOR_SETTINGS" ] && command -v jq >/dev/null; then
+  if [ -f "$CODIUM_SETTINGS" ] && command -v jq >/dev/null; then
     local tmp
-    tmp="$(mktemp "$CURSOR_SETTINGS.XXXXXX")" || return 0
-    if jq "\"editor.rulers\" = $2" "$CURSOR_SETTINGS" >"$tmp"; then
-      mv "$tmp" "$CURSOR_SETTINGS"
+    tmp="$(mktemp "$CODIUM_SETTINGS.XXXXXX")" || return 0
+    if jq "\"editor.rulers\" = $2" "$CODIUM_SETTINGS" >"$tmp"; then
+      mv "$tmp" "$CODIUM_SETTINGS"
     else
       rm -f "$tmp"
     fi

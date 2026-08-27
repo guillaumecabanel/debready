@@ -33,7 +33,7 @@ STEPS=(
   "terminal:Setting up terminal"
   "chrome:Installing Chrome"
   "firefox:Installing Firefox"
-  "cursor:Installing Cursor"
+  "vscodium:Installing VSCodium"
   "docker:Installing Docker"
   "postgres:Starting PostgreSQL"
   "rails:Installing Rails"

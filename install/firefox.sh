@@ -32,3 +32,11 @@ Pin-Priority: 1000' | sudo tee /etc/apt/preferences.d/mozilla >/dev/null
 
 apt_refresh
 apt_install firefox
+
+# The `www` media key (Super+Shift+Return, see install/shortcuts.ini) launches
+# whatever this points at, so Firefox has to own it — Chrome grabs it during its
+# own install otherwise.
+xdg-settings set default-web-browser firefox.desktop
+
+# firefox-profile, used by the Super+B shortcut to reach a named profile.
+stow_pkg firefox-profile

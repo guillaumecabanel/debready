@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# firefox-profile <name> [firefox args…] — launch Firefox with the profile that
+# Firefox's own profile manager shows as <name>.
+#
+# `firefox -P <name>` does NOT work for these: since the Firefox 138+ "profiles"
+# feature, a profile's display name (plus its avatar and theme) lives in the
+# profile group's SQLite store, and new profiles get no profiles.ini entry at
+# all — only a directory. So resolve the name from that store and then use the
+# exact command line Firefox itself uses when switching profiles:
+#
+#   firefox --profile <path> --profiles-activate
+#
+# --profiles-activate raises the window of an instance already running that
+# profile instead of opening a second, empty one.
+set -euo pipefail
+
+name="${1:?usage: firefox-profile <name> [firefox args…]}"
+shift
+
+root="${XDG_CONFIG_HOME:-$HOME/.config}/mozilla/firefox"
+query="SELECT path FROM Profiles WHERE name = '${name//\'/\'\'}' LIMIT 1;"
+path=""
+
+# One store per profile group; a plain install has exactly one.
+for db in "$root/Profile Groups"/*.sqlite; do
+    [ -f "$db" ] || continue
+    path="$(sqlite3 -readonly "$db" "$query" 2>/dev/null || true)"
+    [ -n "$path" ] && break
+done
+
+# No such profile, or Firefox has never run: a plain launch beats doing nothing.
+if [ -z "$path" ]; then
+    exec firefox "$@"
+fi
+
+case "$path" in
+    /*) ;;
+    *) path="$root/$path" ;;
+esac
+
+exec firefox --profile "$path" --profiles-activate "$@"

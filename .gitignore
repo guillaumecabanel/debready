@@ -1,0 +1,11 @@
+# Editor litter. Every dotfiles/ directory is stow-folded into $HOME, so an editor
+# writing a swap or backup file next to a config writes it straight into this repo.
+*.swp
+.*.swp
+*.un~
+*~
+
+# Machine-local config, deliberately untracked. boot.sh re-provisions with
+# `git reset --hard` and no `git clean`, so these survive a reinstall.
+/dotfiles/tmux/.config/tmux/windows.local.conf
+/dotfiles/zsh/.config/shell/local

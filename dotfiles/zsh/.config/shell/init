@@ -5,3 +5,8 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 
 # mise is activated by the oh-my-zsh `mise` plugin (see plugins= in .zshrc),
 # which also wires up its completions. Do not eval `mise activate` again here.
+
+# Was unset, so git and friends fell back to whatever sensible-editor picked.
+# vim is configured by dotfiles/vim (see install/vim.sh).
+export EDITOR=vim
+export VISUAL=vim

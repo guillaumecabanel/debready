@@ -32,6 +32,7 @@ STEPS=(
   "shortcuts:Setting up shortcuts"
   "mise:Installing Mise"
   "terminal:Setting up terminal"
+  "vim:Ricing Vim"
   "chrome:Installing Chrome"
   "firefox:Installing Firefox"
   "vscodium:Installing VSCodium"

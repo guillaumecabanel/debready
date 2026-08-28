@@ -55,17 +55,19 @@ cd ~/.local/share/debready
 - Chrome
 - Firefox (the default browser)
 - VSCodium (settings and extensions provisioned)
+- Vim (colorscheme, statusline, line numbers)
 
 **Terminal:**
 - Zsh with Oh My Zsh
 - Starship prompt
 - tmux, started by Alacritty (prefix <kbd>Ctrl</kbd> + <kbd>Space</kbd>)
-- Alacritty, tmux and VSCodium follow the GNOME light/dark colour scheme automatically
+- Alacritty, tmux, vim and VSCodium follow the GNOME light/dark colour scheme automatically
 
 **Shell tools:**
 - eza (aliased as `ls`)
 - zoxide (aliased as `z`)
 - system update (aliased as `up`)
+- vim (aliased as `v`, and set as `$EDITOR`)
 - gh, jq, sqlite3, wl-clipboard
 
 **TUI:**

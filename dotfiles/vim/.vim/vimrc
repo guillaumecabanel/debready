@@ -1,0 +1,171 @@
+" Vim configuration — stowed from debready (dotfiles/vim/.vim/vimrc).
+"
+" Deliberately at ~/.vim/vimrc rather than ~/.vimrc or ~/.config/vim/vimrc:
+" it keeps everything in one directory, and unlike the XDG path it is not
+" silently disabled by a stray ~/.vimrc appearing later.
+"
+" Colours follow the GNOME light/dark setting — see the theme section below.
+
+" ── Keep vim's runtime files OUT of the debready checkout ──────────────────
+" stow folds ~/.vim into dotfiles/vim/.vim, so ~/.vim IS the git repo. Every
+" default location below would otherwise drop swap/undo/viminfo/netrw files
+" straight into it. install/vim.sh creates these directories.
+set directory=~/.local/state/vim/swap//
+set undodir=~/.local/state/vim/undo//
+set undofile
+set viminfofile=~/.local/state/vim/viminfo
+let g:netrw_home = expand('~/.local/state/vim')
+" Colorschemes are cloned to ~/.local/share/vim, not ~/.vim/pack, for the same
+" reason: a clone under ~/.vim would nest a git repo inside the checkout.
+"
+" They sit in pack/themes/opt rather than pack/themes/start, and are pulled in
+" with packadd! here, because a `start` package only joins 'runtimepath' once
+" the vimrc has finished — too late for the :colorscheme at the bottom of this
+" file, which would fail with E185. `silent!` so a failed clone degrades to
+" default colours instead of an error on every launch.
+set packpath^=~/.local/share/vim
+silent! packadd! tokyonight-vim
+silent! packadd! catppuccin-vim
+
+" ── Leader ────────────────────────────────────────────────────────────────
+" Space, not the default backslash: on this fr+latin9 AZERTY layout `\` is
+" AltGr+8. Space is layout-independent, and does not clash with tmux, whose
+" prefix is Ctrl+Space.
+let g:mapleader = ' '
+nnoremap <Space> <Nop>
+
+" ── Baseline ──────────────────────────────────────────────────────────────
+" A user vimrc stops the runtime defaults.vim from loading, and Debian's
+" /etc/vim/vimrc has everything commented out, so the sensible defaults have
+" to be re-established here rather than inherited.
+syntax enable
+filetype plugin indent on
+
+set backspace=indent,eol,start
+set ttimeout ttimeoutlen=100
+set display=truncate
+set nrformats-=octal
+set showcmd
+set scrolloff=5
+set incsearch hlsearch
+set ignorecase smartcase
+set wildmenu
+set mouse=a
+set splitright splitbelow
+set nowrap
+set laststatus=2
+set noshowmode                    " the statusline below already shows it
+set shortmess+=I                  " no intro screen
+set updatetime=300
+set history=1000
+set autoread
+set nobackup nowritebackup
+
+set expandtab shiftwidth=2 softtabstop=2 tabstop=2 shiftround
+set autoindent smartindent
+
+set list
+set listchars=tab:→\ ,trail:·,nbsp:␣,extends:›,precedes:‹
+
+" Break undo before <C-u>, and reopen a file where it was left.
+inoremap <C-U> <C-G>u<C-U>
+augroup VimrcLastPosition
+  autocmd!
+  autocmd BufReadPost *
+    \ let s:line = line("'\"")
+    \ | if s:line >= 1 && s:line <= line("$") && &filetype !~# 'commit'
+    \ |   execute "normal! g`\""
+    \ | endif
+augroup END
+
+" ── The ask: line numbers ─────────────────────────────────────────────────
+set number relativenumber
+set cursorline
+set signcolumn=no
+" Hybrid numbers: relative while navigating, absolute where they are only
+" being read (insert mode, and windows that do not have focus).
+augroup VimrcNumbers
+  autocmd!
+  autocmd InsertEnter,WinLeave * if &number | setlocal norelativenumber | endif
+  autocmd InsertLeave,WinEnter * if &number | setlocal relativenumber   | endif
+augroup END
+
+" ── True colour ───────────────────────────────────────────────────────────
+" $TERM is tmux-256color, which does not advertise 24-bit colour by itself.
+" tmux.conf sets terminal-overrides ",*:RGB"; these are the other half.
+if !has('gui_running')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+endif
+set termguicolors
+
+" ── Statusline ────────────────────────────────────────────────────────────
+" Powerline pills in the JetBrainsMono Nerd Font, styled to match the tmux
+" status bar. The Stl* highlight groups are defined by the theme files, so
+" they are redefined on every theme switch.
+function! StlMode() abort
+  return get({
+    \ 'n': 'NORMAL', 'i': 'INSERT', 'v': 'VISUAL', 'V': 'V-LINE',
+    \ "\<C-v>": 'V-BLOCK', 'R': 'REPLACE', 'c': 'COMMAND', 't': 'TERMINAL',
+    \ 's': 'SELECT', 'S': 'S-LINE', 'no': 'O-PENDING',
+    \ }, mode(), toupper(mode()))
+endfunction
+
+" U+E0B0 closes a pill, U+E0B2 opens one — the right-hand segment needs the
+" mirrored glyph or the triangle points away from its own block.
+let s:pill_close = nr2char(0xe0b0)
+let s:pill_open  = nr2char(0xe0b2)
+
+let &statusline =
+  \   '%#StlMode# %{StlMode()} '
+  \ . '%#StlModeSep#' . s:pill_close
+  \ . '%#StlFile# %t %m%r '
+  \ . '%#StlFileSep#' . s:pill_close
+  \ . '%#StlInfo#%=%{&filetype} '
+  \ . '%#StlFileSep#' . s:pill_open
+  \ . '%#StlFile# %l:%c  %p%% '
+
+" ── Colours follow the GNOME light/dark setting ───────────────────────────
+" theme-switcher.sh repoints ~/.current-vim-theme.vim at theme-dark.vim or
+" theme-light.vim. It cannot notify us: this vim is built -clientserver, so
+" there is no `vim --remote-send` to push into a running instance, and vim has
+" no signal autocmd. So each instance pulls instead, on a timer.
+"
+" The poll compares resolve() rather than mtime, because repointing a symlink
+" does not touch the target file's timestamp.
+let s:theme_link = expand('~/.current-vim-theme.vim')
+let s:theme_now = ''
+
+function! s:SyncTheme(...) abort
+  if !filereadable(s:theme_link)
+    return
+  endif
+  let l:target = resolve(s:theme_link)
+  if l:target ==# s:theme_now
+    return
+  endif
+  " Recorded before sourcing, so a broken theme file cannot make the timer
+  " re-source it every two seconds forever.
+  let s:theme_now = l:target
+  execute 'source' fnameescape(l:target)
+  redrawstatus!
+endfunction
+
+call s:SyncTheme()
+if has('timers')
+  call timer_start(2000, function('s:SyncTheme'), {'repeat': -1})
+endif
+augroup VimrcTheme
+  autocmd!
+  " Instant path when returning to the window; tmux.conf sets focus-events on.
+  autocmd FocusGained * call s:SyncTheme()
+augroup END
+
+" ── Clipboard ─────────────────────────────────────────────────────────────
+" This vim is built -clipboard/-xterm_clipboard, so "+y and "*y are no-ops.
+" wl-clipboard is native Wayland and always present here.
+xnoremap <silent> <leader>y y:call system('wl-copy', @")<CR>
+nnoremap <silent> <leader>Y :call system('wl-copy', join(getline(1, '$'), "\n"))<CR>
+nnoremap <silent> <leader>p :read !wl-paste --no-newline<CR>
+
+nnoremap <silent> <leader><Space> :nohlsearch<CR>

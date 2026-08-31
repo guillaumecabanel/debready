@@ -18,8 +18,8 @@ fi
 #   packages first    every step below needs the tools it installs
 #   mise before terminal   the stowed zsh init activates mise; stowing it while
 #                          mise is missing leaves a broken shell if we abort
-#   docker before postgres the container needs a running daemon and the group
-#   docker before redis    same
+#   docker before the db steps  postgres/redis/timescale each need a daemon
+#                               that is already up and reachable
 #   postgres before rails  a Rails app expects its database to be up
 #   plymouth late          update-initramfs is by far the slowest step, so let
 #                          everything that can fail cheaply fail first
@@ -39,6 +39,7 @@ STEPS=(
   "docker:Installing Docker"
   "postgres:Starting PostgreSQL"
   "redis:Starting Redis"
+  "timescale:Starting TimescaleDB"
   "rails:Installing Rails"
   "theme_switcher:Making things beautiful"
   "plymouth:Setting up boot splash"

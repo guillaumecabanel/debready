@@ -10,3 +10,9 @@ command -v zoxide >/dev/null && eval "$(zoxide init zsh)"
 # vim is configured by dotfiles/vim (see install/vim.sh).
 export EDITOR=vim
 export VISUAL=vim
+
+# Docker runs rootless (see install/docker.sh): the daemon is a `systemd --user`
+# unit listening on this user's runtime dir, not root's /var/run/docker.sock.
+# The `rootless` docker context already points the CLI there; this is for Go
+# clients like lazydocker that only read the environment.
+export DOCKER_HOST="unix://${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/docker.sock"

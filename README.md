@@ -79,9 +79,10 @@ cd ~/.local/share/debready
 - Ruby
 - Rails
 - Ruby LSP (VSCodium extension)
-- Docker
+- Docker, in [rootless mode](https://docs.docker.com/engine/security/rootless/)
 - PostgreSQL running in Docker
 - Redis running in Docker
+- TimescaleDB running in Docker
 
 **Misc:**
 - Boot splash
@@ -98,6 +99,24 @@ cd ~/.local/share/debready
 - JetBrainsMono Nerd Font
 
 ## Troubleshoot
+### Docker
+The daemon is rootless: it is a `systemd --user` unit, not a system service, and
+there is no `docker` group. The root daemon is masked on purpose — being in the
+`docker` group is equivalent to being root, so `install/docker.sh` removes it.
+
+```
+systemctl --user status docker
+journalctl --user -u docker -f
+docker info --format '{{.SecurityOptions}}'   # expect name=rootless
+```
+
+Containers are started by the user manager, so `loginctl enable-linger` is what
+makes `--restart unless-stopped` survive a reboot without logging in.
+
+Two rootless limits worth knowing: host ports below 1024 cannot be published
+(remap them in the compose file), and the daemon has its own image/volume store
+in `~/.local/share/docker` — nothing from a previous rootful install is visible.
+
 ### Wifi issues
 ```
 cat /etc/NetworkManager/NetworkManager.conf

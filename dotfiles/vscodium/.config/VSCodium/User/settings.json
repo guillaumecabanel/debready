@@ -14,5 +14,6 @@
     "editor.rulers": [
         { "column": 80, "color": "#8080801f" },
         { "column": 120, "color": "#f8717155" }
-    ]
+    ],
+    "workbench.startupEditor": "none"
 }

@@ -41,6 +41,7 @@ STEPS=(
   "redis:Starting Redis"
   "timescale:Starting TimescaleDB"
   "rails:Installing Rails"
+  "python:Installing Python"
   "theme_switcher:Making things beautiful"
   "plymouth:Setting up boot splash"
   "autostart:Scheduling post reboot script"

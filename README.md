@@ -79,6 +79,8 @@ cd ~/.local/share/debready
 - Ruby
 - Rails
 - Ruby LSP (VSCodium extension)
+- uv
+- Python 3.14, uv-managed (`python`/`python3` resolve to it, not to Debian's)
 - Docker, in [rootless mode](https://docs.docker.com/engine/security/rootless/)
 - PostgreSQL running in Docker
 - Redis running in Docker

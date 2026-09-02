@@ -56,6 +56,7 @@ cd ~/.local/share/debready
 - Firefox (the default browser)
 - VSCodium (settings and extensions provisioned)
 - Vim (colorscheme, statusline, line numbers)
+- VLC
 
 **Terminal:**
 - Zsh with Oh My Zsh

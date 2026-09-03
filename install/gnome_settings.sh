@@ -22,6 +22,10 @@ sudo sed -i "/^\[daemon\]/a AutomaticLoginEnable=true\nAutomaticLogin=$DEBREADY_
 # when the package is already there, so this needs no guard.
 pipx -q install gnome-extensions-cli --system-site-packages
 
+# latin9_nodeadkeys, not latin9: in latin9 AltGr+7 is dead_grave, so a backtick
+# needs two presses. nodeadkeys drops all four dead keys (grave, acute,
+# circumflex, diaeresis); accented letters come from the Compose key below.
+gsettings set org.gnome.desktop.input-sources sources "[('xkb', 'fr+latin9_nodeadkeys')]"
 gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
 gsettings set org.gnome.desktop.interface clock-format "'24h'"
 gsettings set org.gnome.desktop.interface enable-animations true
